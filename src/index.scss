@@ -22,6 +22,9 @@ $dark-green: #1C221C;
 .bg-color-green{
   background-color: $green;
 }
+.bg-color-dgreen{
+  background-color: $dark-green;
+}
 .bg-color-lgrey{
   background-color: $light-grey;
 }
@@ -46,7 +49,7 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --custom-bg-color: #101010;
+  --custom-bg-color: #1C221C;
   --custom-panel-color: #222;
   --custom-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.8);
   --custom-color: #fff;

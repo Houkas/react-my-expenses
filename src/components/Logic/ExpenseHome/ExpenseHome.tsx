@@ -49,9 +49,6 @@ function ExpenseHome(){
   
     return (
       <div>
-        <h1 className="font-extrabold text-transparent text-6xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 text-center m-4">
-          Mes dépenses
-        </h1>
         <NewExpense onAddExpense={addExpenseHandler} />
         {expensesFromDb !== undefined && <Expenses expenses={expensesFromDb}/>}
         

@@ -13,7 +13,7 @@ function App() {
   
 
   return (
-    <div className='mx-5'>
+    <div>
     <BrowserRouter>
       <AuthProvider>
         <Routes>

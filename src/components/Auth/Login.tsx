@@ -32,7 +32,7 @@ export function Login() {
 
   return (
     <>
-      <div className="container flex flex-col justify-center h-screen">
+      <div className=" flex flex-col justify-center h-screen mx-5">
         <img src={'./logo.svg'} className='mx-auto my-4'></img>
         <form onSubmit={handleSubmit}>
           <label htmlFor="input-email" className='font-normal text-base color-lgrey'>Email</label>
