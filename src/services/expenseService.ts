@@ -3,7 +3,7 @@ import type { Expense } from '../types/Expense'
 
 export async function addExpense(expense: Expense, userId: string | undefined) {
 
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from('expenses')
     .insert([
       {

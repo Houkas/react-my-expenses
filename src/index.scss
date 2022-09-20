@@ -1,6 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap');
+
+$green: #87FF73;
+$light-grey: #E4E8E3;
+$grey: #B4C0B2;
+$dark-green: #1C221C;
+
+.color-green{
+  color: $green;
+}
+.color-lgrey{
+  color: $light-grey;
+}
+.color-dgreen{
+  color: $dark-green;
+}
+.bg-color-green{
+  background-color: $green;
+}
+.bg-color-lgrey{
+  background-color: $light-grey;
+}
+.border-lgrey{
+  border-color: $light-grey;
+}
+
+h1, h2, h3, h4, h5, label{
+  font-family: 'Space Mono', monospace;
+}
+
+*{
+  font-family: 'Roboto', sans-serif;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -8,13 +44,8 @@ code {
 html,
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --custom-font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
-    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   --custom-bg-color: #101010;
   --custom-panel-color: #222;
   --custom-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.8);
@@ -27,14 +58,11 @@ body {
 
   padding: 0;
   margin: 0;
-  font-family: var(--custom-font-family);
   background-color: var(--custom-bg-color);
 }
 
 * {
-  color: var(--custom-color);
-  font-family: var(--custom-font-family);
-  box-sizing: border-box;
+  color: $light-grey;
 }
 
 html,
@@ -47,11 +75,7 @@ body,
 
 /* Grid */
 
-.container {
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-}
+
 .row {
   position: relative;
   width: 100%;
@@ -122,9 +146,9 @@ body,
 
 @media only screen and (min-width: 33.75em) {
   /* 540px */
-  .container {
+  /*.container {
     width: 80%;
-  }
+  }*/
 }
 
 @media only screen and (min-width: 45em) {
@@ -172,10 +196,10 @@ body,
 
 @media only screen and (min-width: 60em) {
   /* 960px */
-  .container {
+  /*.container {
     width: 75%;
     max-width: 60rem;
-  }
+  }*/
 }
 
 /* Forms */
@@ -185,12 +209,10 @@ label {
   margin: 5px 0;
   color: var(--custom-color-secondary);
   font-size: 0.8rem;
-  text-transform: uppercase;
 }
 
 input {
   width: 100%;
-  border: var(--custom-border);
   padding: 8px;
   font-size: 0.9rem;
   background-color: var(--custom-bg-color);
@@ -247,20 +269,6 @@ input[disabled] {
 }
 
 /* Button */
-
-button,
-.button {
-  color: var(--custom-color);
-  border: var(--custom-border);
-  background-color: var(--custom-bg-color);
-  display: inline-block;
-  text-align: center;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  text-align: center;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-}
 
 button.primary,
 .button.primary {

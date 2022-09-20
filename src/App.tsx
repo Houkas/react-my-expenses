@@ -6,14 +6,14 @@ import { Login } from './components/Auth/Login';
 import { PrivateRoute } from './components/Auth/PrivateRoute';
 import { Signup } from './components/Auth/Signup';
 import Expenses from './components/Logic/Expenses/Expenses';
-import './index.css'
+import './index.scss'
 
 
 function App() {
   
 
   return (
-    <div>
+    <div className='mx-5'>
     <BrowserRouter>
       <AuthProvider>
         <Routes>
