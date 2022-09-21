@@ -48,7 +48,7 @@ function ExpenseHome(){
     }
   
     return (
-      <div>
+      <div className="py-20 px-5">
         <NewExpense onAddExpense={addExpenseHandler} />
         {expensesFromDb !== undefined && <Expenses expenses={expensesFromDb}/>}
         

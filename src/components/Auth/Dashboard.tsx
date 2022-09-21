@@ -31,16 +31,12 @@ export function Dashboard() {
       if(isOpened){
         setIsMenuVisible((isOpened) => !isOpened);
       }
-      console.log(isMenuVisivle);
-      debugger;
     }
   
     return (
       <div>
         <Header onOpeningMenu={handleOnOpeningMenu} />
-        {isMenuVisivle === true && <Menu />}
-        <p>Welcome to dashboard!</p>
-        <button onClick={handleSignOut}>Sign out</button>
+        {isMenuVisivle === true && <Menu onSignOut={handleSignOut}/>}
         <ExpenseHome />
         <Navbar />
       </div>
