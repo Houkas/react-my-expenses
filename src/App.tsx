@@ -6,6 +6,7 @@ import { Login } from './components/Auth/Login';
 import { PrivateRoute } from './components/Auth/PrivateRoute';
 import { Signup } from './components/Auth/Signup';
 import Expenses from './components/Logic/Expenses/Expenses';
+import Stats from './components/Logic/Stats/Stats';
 import './index.scss'
 
 
@@ -22,7 +23,7 @@ function App() {
           </Route>
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="expenses" element={<Expenses />} />
+          <Route path="/statistiques" element={<Stats />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

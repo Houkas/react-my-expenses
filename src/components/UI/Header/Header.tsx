@@ -2,16 +2,17 @@ import { useState } from "react";
 import "./Header.scss";
 
 function Header(props: any) {
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpenForClosing, setisMenuOpenForClosing] = useState(false);
 
-  function updateIsMenuOpen(value: any){
+  function updateIsMenuOpen(value: any) {
     props.onOpeningMenu(value);
   }
 
-    function handleOpeningMenu(){
-      updateIsMenuOpen(!isMenuOpen);
-    }
+  function handleOpeningMenu() {
+    updateIsMenuOpen(!isMenuOpen);
+    setisMenuOpenForClosing(!isMenuOpenForClosing);
+  }
 
   return (
     <>
@@ -20,9 +21,16 @@ function Header(props: any) {
           <img src={"./logo.svg"} alt="" className="w-[50%] ml-[-20px] pt-5" />
           <button
             className="btn btn-square btn-ghost pr-5"
-            onClick={() => { handleOpeningMenu() }}
+            onClick={() => {
+              handleOpeningMenu();
+            }}
           >
-            <img src={isMenuOpen === false ? "./burger.svg" : "./close.svg"} alt="" />
+            <img
+              src={
+                isMenuOpenForClosing !== false ? "./close.svg" : "./burger.svg"
+              }
+              alt=""
+            />
           </button>
         </div>
       </div>
