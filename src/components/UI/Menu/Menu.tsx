@@ -17,7 +17,10 @@ function Menu(props:any){
     
     return(
         <div className={"menu-fadeIn absolute min-h-screen bg-color-dgreen min-w-full py-20 px-5 top-0"}>
-            <button onClick={() => handleSignOut()}>Sign out</button>
+            <button onClick={() => handleSignOut()} className="flex flex-row items-center">
+                <img src={'./sign_out.svg'} />
+                Sign out
+            </button>
         </div>
     );
 }

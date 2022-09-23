@@ -47,17 +47,17 @@ export function Signup() {
         <img src={'./logo.svg'} className='mx-auto my-4'></img>
         <form onSubmit={handleSubmit}>
           <label htmlFor="input-email" className='font-normal text-base color-lgrey'>Email</label>
-          <input id="input-email" type="email" ref={emailRef} className='border-lgrey border-[1px]'/>
+          <input id="input-email" type="email" ref={emailRef} className='border-lgrey border-[1px] bg-transparent'/>
 
           <label htmlFor="input-password" className='font-normal text-base color-lgrey'>Mot de passe</label>
           <div className='flex flex-row border-lgrey border-[1px]'>
-            <input id="input-password" type={isPasswordVisible ? 'text' :'password'} ref={passwordRef} className='border-lgrey'/>
+            <input id="input-password" type={isPasswordVisible ? 'text' :'password'} ref={passwordRef} className='border-lgrey bg-transparent'/>
             <img onClick={() => {setPasswordVisible(!isPasswordVisible)}} src={isPasswordVisible ? './visible_eye.svg' :  './invisible_eye.svg'} />
           </div>
 
           <label htmlFor="input-password" className='font-normal text-base color-lgrey'>Confirmer Mot de passe</label>
           <div className='flex flex-row border-lgrey border-[1px]'>
-            <input id="input-password" type={isPasswordConfirmVisible ? 'text' :'password'} ref={passwordConfirmRef} className='border-lgrey'/>
+            <input id="input-password" type={isPasswordConfirmVisible ? 'text' :'password'} ref={passwordConfirmRef} className='border-lgrey bg-transparent'/>
             <img onClick={() => {setPasswordConfirmVisible(!isPasswordConfirmVisible)}} src={isPasswordConfirmVisible ? './visible_eye.svg' :  './invisible_eye.svg'} />
           </div>
 

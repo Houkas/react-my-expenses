@@ -1,8 +1,7 @@
 import './Card.css';
 function Card(props:any){
-    const classes = 'card ' + props.className;
     return(
-        <div className={classes}>{props.children}</div>
+        <div className='bg-color-lgrey p-2'>{props.children}</div>
     );
 }
 
