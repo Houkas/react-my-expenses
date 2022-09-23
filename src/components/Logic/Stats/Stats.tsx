@@ -15,10 +15,11 @@ function Stats() {
 
   return (
     <>
-      <p>im stats</p>
       <Header onOpeningMenu={handleOnOpeningMenu} />
+      <div className="pt-20 px-5">
+        <p>im stats</p>
+      </div>
       {isMenuVisivle === true && <Menu />}
-      <Stats />
       <Navbar />
     </>
   );

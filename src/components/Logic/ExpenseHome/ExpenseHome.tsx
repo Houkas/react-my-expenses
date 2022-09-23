@@ -39,8 +39,6 @@ function ExpenseHome(){
       .catch(console.error)
     }, []);
 
-    const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
-
     function addExpenseHandler(expense:any){
       setExpensesFromDb((prevExpenses) => {
         return [expense, ...(prevExpenses ?? [])];
@@ -49,9 +47,7 @@ function ExpenseHome(){
   
     return (
       <div className="py-20 px-5">
-        <NewExpense onAddExpense={addExpenseHandler} />
         {expensesFromDb !== undefined && <Expenses expenses={expensesFromDb}/>}
-        
       </div>
     );
 }

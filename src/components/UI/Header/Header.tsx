@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import "./Header.scss";
 
 function Header(props: any) {
@@ -18,7 +19,9 @@ function Header(props: any) {
     <>
       <div className="navbar bg-color-dgreen fixed w-full z-[1] top-0">
         <div className="flex flex-row justify-between">
-          <img src={"./logo.svg"} alt="" className="w-[50%] ml-[-20px] pt-5" />
+          <NavLink to="/">
+            <img src={"./logo.svg"} alt="" className="w-[50%] pt-5" />
+          </NavLink>
           <button
             className="btn btn-square btn-ghost pr-5"
             onClick={() => {

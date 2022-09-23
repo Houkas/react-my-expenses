@@ -27,7 +27,6 @@ function Expenses(props:any){
         <div>
             <Card className='expenses'>
                 <ExpensesFilter selected={selectedYear} onYearSelected={yearFilterHandler}/>
-                <ExpensesChart expenses={fExpenses}/>
                 <ExpensesList items={fExpenses}/>
             </Card>
         </div>

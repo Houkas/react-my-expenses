@@ -3,12 +3,13 @@ export class Expense{
     private _date: string;
     private _amount: number;
     private _title: string;
+    private _category: string;
 
-    constructor(title: string, date: string, amount: number) {
+    constructor(title: string, category: string, date: string, amount: number) {
         this._date = date;
         this._amount = amount;
         this._title = title;
-        
+        this._category = category;
     }
 
     get date(): string {
@@ -33,5 +34,13 @@ export class Expense{
 
     set title(value: string) {
         this._title = value;
+    }
+
+    get category(): string {
+        return this._title;
+    }
+
+    set category(value: string) {
+        this._category = value;
     }
 }
