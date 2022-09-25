@@ -2,7 +2,6 @@ import { supabase } from "./supabaseClient"
 import type { Expense } from '../types/Expense'
 import { useState } from "react";
 
-// const [expensesState, setExpensesState] = useState<Expense[] | null>(null);
 
 export async function addExpense(expense: Expense, userId: string | undefined) {
 
@@ -13,12 +12,11 @@ export async function addExpense(expense: Expense, userId: string | undefined) {
         title: expense.title,
         amount: expense.amount,
         date: expense.date,
-        user_id: userId
+        user_id: userId,
+        category: expense.category
       },
     ]).single();
 
-  // fetchExpenses(undefined);
-  // setExpensesState(data);
   return data;
 }
 
@@ -29,16 +27,14 @@ export async function fetchExpenses(userId: string | undefined) {
   if (error){
     console.log("error", error);
   } else{
-    // setExpensesState(expenses);
     return expenses;
   }
 }
 
-export async function deleteTodos(id:number){
+export async function deleteExpense(id:number){
   try {
 
-    const { data } = await supabase.from("todos").delete().eq("id", id);
-    // setExpensesState(data);
+    const { data } = await supabase.from("expenses").delete().eq("id", id);
 
   } catch (error) {
     console.log("error", error);
@@ -52,16 +48,4 @@ export const addTodo = async (task:string, user:any) => {
       .single();
 
     return todo;
-}
-
-export async function setStateExpenses(expenses:Expense[] | null){
-  // setExpensesState(expenses);
-}
-
-export async function getStateExpenses(){
-  // return expensesState;
-}
-
-function updateState() {
-  throw new Error("Function not implemented.");
 }

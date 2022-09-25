@@ -4,15 +4,9 @@ import ExpenseForm from "../../Logic/NewExpense/ExpenseForm";
 
 function Navbar(props: any) {
   const location = useLocation();
-  console.log(location.pathname);
 
   function saveExpenseDataHandler(enteredExpenseData: any) {
-    const expenseData = {
-      ...enteredExpenseData,
-      id: Math.random().toString(),
-    };
-    props.onAddExpense(expenseData);
-    hideExpenseForm();
+    props.onSaveExpenseData(enteredExpenseData);
   }
 
   let [isFormVisible, setIsFormVisible] = useState(false);

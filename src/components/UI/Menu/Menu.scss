@@ -1,5 +1,6 @@
 .menu-fadeIn{
     animation: fadeIn .25s;
+    transition: .25s ease;
 }
 .menu-fadeOut{
     animation: fadeOut .25s;

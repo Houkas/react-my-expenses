@@ -22,6 +22,10 @@ function Expenses(props: any) {
     setYear(yearSelected);
   }
 
+  function deleteExpenseHandler(id:number){
+    props.onDeleteExpense(id);
+  }
+
   return (
     <div>
       <ExpensesFilter
@@ -29,7 +33,7 @@ function Expenses(props: any) {
         onYearSelected={yearFilterHandler}
       />
       <Card className="expenses">
-        <ExpensesList items={fExpenses} />
+        <ExpensesList items={fExpenses} onDeleteExpense={deleteExpenseHandler}/>
       </Card>
     </div>
   );

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Expense } from "../../../types/Expense";
-import Card from "../../UI/Card/Card";
+import { deleteExpense } from "../../../services/expenseService";
 import ExpenseDate from "../ExpenseDate/ExpenseDate";
 import "./ExpenseItem.css";
 
@@ -8,8 +7,12 @@ function ExpenseItem(props: any) {
   const [expenseTitle, seTitle] = useState(props.title);
   const expenseAmount: number = props.amount;
 
-  const clickHanler = () => {
+  function editHandler() {
     seTitle("test");
+  };
+
+  function deleteHandler() {
+    props.onDeleteExpense(props.id);
   };
 
   return (
@@ -22,11 +25,11 @@ function ExpenseItem(props: any) {
         <div className="color-dgreen">{expenseAmount} €</div>
 
         <div className="flex flex-col">
-          <button className="bg-color-dgreen m-1 w-[25px] h-[25px]" onClick={clickHanler}>
-            <img src="./close.svg" />
+          <button className="bg-color-dgreen m-1 w-[25px] h-[25px] flex flex-row justify-center items-center" onClick={editHandler}>
+            <img src="./edit_green.svg" />
           </button>
-          <button className="bg-color-dgreen m-1 w-[25px] h-[25px]" onClick={clickHanler}>
-            <img src="./close.svg" />
+          <button className="bg-color-dgreen m-1 w-[25px] h-[25px] flex flex-row justify-center items-center" onClick={deleteHandler}>
+            <img src="./delete_red.svg" />
           </button>
         </div>
         

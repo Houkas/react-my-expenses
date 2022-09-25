@@ -3,8 +3,8 @@ import React, { SetStateAction, useEffect, useState } from "react";
 import { addExpense } from "../../../services/expenseService";
 import { supabase } from "../../../services/supabaseClient";
 import { Expense } from "../../../types/Expense";
-import { useAuth } from "../../Auth/Auth";
 import "./ExpenseForm.css";
+
 function ExpenseForm(props: any) {
   const [user, setUser] = useState<User | null>(null);
 
@@ -106,7 +106,6 @@ function ExpenseForm(props: any) {
               type="Date"
               value={enteredDate}
               min="2019-01-01"
-              max="2022-08-28"
               onChange={dateChangeHandler}
               className="p-2 border-dgreen border bg-transparent color-dgreen"
             />
