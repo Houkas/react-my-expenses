@@ -12,6 +12,7 @@ function ExpenseItem(props: any) {
   };
 
   function deleteHandler() {
+    deleteExpense(props.id)
     props.onDeleteExpense(props.id);
   };
 
