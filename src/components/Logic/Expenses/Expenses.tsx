@@ -31,8 +31,6 @@ function Expenses(props: any) {
   }
 
   useEffect(() => {
-    debugger;
-    console.log(fExpenses);
     // init
     if(fExpenses.length > 0 && expensesSum === 0){
       fExpenses.forEach((element: Expense) => {
@@ -43,12 +41,17 @@ function Expenses(props: any) {
       setIsInit(true);
     }
     // update
-    if(fExpenses.length > 0 && expensesSum !== 0 && isInit=== false){
+    if(fExpenses.length > 0 && expensesSum !== 0 && isInit=== false && selectedYear !== ""){
+      
       fExpenses.forEach((element: Expense) => {
         setExpensesSum((prevState) =>{
           return element.amount + prevState
         });
       });
+      setExpensesSum(0);
+    }
+    if(fExpenses.length === 0){
+      setExpensesSum(0)
     }
   }, [fExpenses]);
 

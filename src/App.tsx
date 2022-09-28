@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { RecoilRoot } from "recoil";
 import "./App.css";
 import { AuthProvider } from "./components/Auth/Auth";
 import { Dashboard } from "./components/Auth/Dashboard";
@@ -13,20 +12,18 @@ import "./index.scss";
 function App() {
   return (
     <div>
-      <RecoilRoot>
-        <BrowserRouter>
-          <AuthProvider>
-            <Routes>
-              <Route path="/" element={<PrivateRoute />}>
-                <Route path="/" element={<Dashboard />} />
-              </Route>
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/statistiques" element={<Stats />} />
-            </Routes>
-          </AuthProvider>
-        </BrowserRouter>
-      </RecoilRoot>
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<PrivateRoute />}>
+              <Route path="/" element={<Dashboard />} />
+            </Route>
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/statistiques" element={<Stats />} />
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
     </div>
   );
 }
