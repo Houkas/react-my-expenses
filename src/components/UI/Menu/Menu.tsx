@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Auth/Auth';
+import NewCategory from '../../Logic/NewCategory/NewCategory';
 import './Menu.scss';
 
 function Menu(props:any){
@@ -21,6 +22,7 @@ function Menu(props:any){
                 <img src={'./sign_out.svg'} />
                 Sign out
             </button>
+            <NewCategory></NewCategory>
         </div>
     );
 }

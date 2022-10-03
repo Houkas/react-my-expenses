@@ -1,6 +1,7 @@
 import { supabase } from "./supabaseClient"
 import type { Expense } from '../types/Expense'
 import { useState } from "react";
+import { ExpenseCategory } from "../types/ExpenseCategory";
 
 
 export async function addExpense(expense: Expense, userId: string | undefined) {
@@ -13,7 +14,8 @@ export async function addExpense(expense: Expense, userId: string | undefined) {
         amount: expense.amount,
         date: expense.date,
         user_id: userId,
-        category: expense.category
+        category: expense.category,
+        type: expense.type
       },
     ]).single();
 
@@ -34,18 +36,45 @@ export async function fetchExpenses(userId: string | undefined) {
 export async function deleteExpense(id:number){
   try {
 
-    const { data } = await supabase.from("expenses").delete().eq("id", id);
+    await supabase.from("expenses").delete().eq("id", id);
 
   } catch (error) {
     console.log("error", error);
   }
 }
 
-export const addTodo = async (task:string, user:any) => {
-    let { data: todo, error } = await supabase
-      .from("todos")
-      .insert({ task, user_id: user.id })
-      .single();
+export async function addExpenseCategory(expenseCategory: ExpenseCategory, userId: string | undefined) {
 
-    return todo;
+  const { data } = await supabase
+    .from('categories')
+    .insert([
+      {
+        name: expenseCategory.name,
+        color: expenseCategory.color,
+        user_id: userId
+      },
+    ]).single();
+
+  return data;
+}
+
+export async function fetchCategories(userId: string | undefined): Promise<ExpenseCategory[] | undefined> {
+  const { data: expenses, error } = await supabase
+    .from("categories")
+    .select("*");
+  if (error){
+    console.log("error", error);
+  } else{
+    return expenses;
+  }
+}
+
+export async function deleteCategory(id:number){
+  try {
+
+    await supabase.from("categories").delete().eq("id", id);
+
+  } catch (error) {
+    console.log("error", error);
+  }
 }

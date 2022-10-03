@@ -4,12 +4,15 @@ export class Expense{
     private _amount: number;
     private _title: string;
     private _category: string;
+    private _type: string;
+    id!: number;
 
-    constructor(title: string, category: string, date: string, amount: number) {
+    constructor(title: string, category: string, date: string, amount: number, type: string) {
         this._date = date;
         this._amount = amount;
         this._title = title;
         this._category = category;
+        this._type = type;
     }
 
     get date(): string {
@@ -37,10 +40,18 @@ export class Expense{
     }
 
     get category(): string {
-        return this._title;
+        return this._category;
     }
 
     set category(value: string) {
         this._category = value;
+    }
+
+    get type(): string {
+        return this._type;
+    }
+
+    set type(value: string) {
+        this._type = value;
     }
 }
