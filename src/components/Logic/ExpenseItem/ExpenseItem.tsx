@@ -17,6 +17,7 @@ function ExpenseItem(props: any) {
 
   useEffect(() => {
     //init
+    if(categories?.length == 0 || categories == undefined)
     fetchCategories(user?.id).then((categories) => {
       setCategories(categories);
     });

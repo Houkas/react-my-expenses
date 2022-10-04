@@ -3,7 +3,6 @@ import Card from "../../UI/Card/Card";
 import ExpensesFilter from "../ExpensesFilter/ExpensesFilter";
 import { useEffect, useState } from "react";
 import ExpensesList from "../ExpensesList/ExpensesList";
-import ExpensesChart from "../ExpensesChart/ExpensesChart";
 import ExpensesSum from "../ExpensesSum/ExpensesSum";
 import { Expense } from "../../../types/Expense";
 
@@ -11,6 +10,7 @@ function Expenses(props: any) {
   const [selectedYear, setYear] = useState("");
   const [expensesSum, setExpensesSum] = useState(0);
   const [isInit, setIsInit] = useState(true);
+  const [sumByAction, setSumByAction] = useState(props.action.toString());
   let fExpenses: any;
 
   if (selectedYear.toString() !== "") {
@@ -28,6 +28,8 @@ function Expenses(props: any) {
 
   function deleteExpenseHandler(id:number){
     props.onDeleteExpense(id);
+    setIsInit(false);
+    setSumByAction("onDelete");
   }
 
   useEffect(() => {
@@ -40,20 +42,28 @@ function Expenses(props: any) {
       });
       setIsInit(true);
     }
+    debugger;
     // update
-    if(fExpenses.length > 0 && expensesSum !== 0 && isInit=== false && selectedYear !== ""){
-      
+    if(fExpenses.length > 0 && expensesSum !== 0 && isInit=== false && sumByAction === "onAdd"){
       fExpenses.forEach((element: Expense) => {
         setExpensesSum((prevState) =>{
           return element.amount + prevState
         });
+        setSumByAction("");
       });
-      setExpensesSum(0);
+    }
+    if(fExpenses.length > 0 && expensesSum !== 0 && isInit=== false && sumByAction === "onDelete"){
+      fExpenses.forEach((element: Expense) => {
+        setExpensesSum((prevState) =>{
+          return element.amount - prevState
+        });
+        setSumByAction("");
+      });
     }
     if(fExpenses.length === 0){
       setExpensesSum(0)
     }
-  }, [fExpenses]);
+  }, [fExpenses, sumByAction, props.action]);
 
   return (
     <div>

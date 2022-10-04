@@ -96,8 +96,7 @@ function NewCategory() {
                 "m-2 flex flex-row flex-wrap items-center justify-center px-2"
               }
               style={{
-                background:
-                  "linear-gradient(90deg, #1C221C 0%," + categorie.color,
+                background: categorie.color + " .5",
                 border: "solid 1px " + categorie.color,
               }}
             >

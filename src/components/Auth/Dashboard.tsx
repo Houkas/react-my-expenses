@@ -17,6 +17,7 @@ export function Dashboard() {
   // Get current user and signOut function from context
   const { user } = useAuth();
   const [expensesFromDb, setExpensesFromDb] = useState<any[] | undefined>([]);
+  const [actionForSum, setactionForSum] = useState("");
 
   useEffect(() =>{
     fetchExpenses(user?.id).then(expenses => {
@@ -30,6 +31,7 @@ export function Dashboard() {
     setExpensesFromDb((prevExpenses) => {
       return [expense, ...(prevExpenses ?? [])];
     });
+    setactionForSum("onAdd");
   }
 
   function deleteExpenseHandler(id:number){
@@ -50,7 +52,7 @@ export function Dashboard() {
     <div>
       <Header onOpeningMenu={handleOnOpeningMenu} />
       {isMenuVisivle === true && <Menu />}
-      <ExpenseHome expenses={expensesFromDb} onDeleteExpense={deleteExpenseHandler}/>
+      <ExpenseHome expenses={expensesFromDb} onDeleteExpense={deleteExpenseHandler} action={actionForSum}/>
       <Navbar onSaveExpenseData={addExpenseHandler}/>
     </div>
   );
