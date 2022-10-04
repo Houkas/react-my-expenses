@@ -3,10 +3,10 @@ import './ExpenseDate.css';
 function ExpenseDate(props:any){
 
     return(
-        <div className='border border-dgreen w-[75px] h-[75px] flex flex-col items-center justify-center'>
-            <div className='color-dgreen text-center text-sm'>{new Date(props.date).toLocaleString('fr', { day: 'numeric' })}</div>
-            <div className='color-dgreen text-center text-sm'>{new Date(props.date).toLocaleString('fr', { month: 'long' })}</div>
-            <div className='color-dgreen text-center text-sm'>{new Date(props.date).getFullYear()}</div>
+        <div className='flex flex-row items-center justify-center'>
+            <span style={{fontSize: "12px"}} className='color-dgreen text-center font-medium'>{new Date(props.date).toLocaleString('fr', { day: 'numeric' }) + '/'}</span>
+            <span style={{fontSize: "12px"}} className='color-dgreen text-center font-medium'>{new Date(props.date).toLocaleString('fr', { month: 'numeric' }) + '/'}</span>
+            <span style={{fontSize: "12px"}} className='color-dgreen text-center font-medium'>{new Date(props.date).getFullYear()}</span>
         </div>
     );
 }

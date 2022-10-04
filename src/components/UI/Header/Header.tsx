@@ -17,7 +17,7 @@ function Header(props: any) {
 
   return (
     <>
-      <div className="navbar bg-color-dgreen fixed w-full z-[1] top-0">
+      <div className="navbar bg-color-dgreen fixed w-full top-0 z-[2]">
         <div className="flex flex-row justify-between">
           <NavLink to="/">
             <img src={"./logo.svg"} alt="" className="w-[50%] pt-5" />

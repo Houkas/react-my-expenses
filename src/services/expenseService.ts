@@ -14,7 +14,7 @@ export async function addExpense(expense: Expense, userId: string | undefined) {
         amount: expense.amount,
         date: expense.date,
         user_id: userId,
-        category: expense.category,
+        category_id: expense.category_id,
         type: expense.type
       },
     ]).single();

@@ -26,7 +26,7 @@ function Navbar(props: any) {
           onHideExpenseForm={hideExpenseForm}
         />
       )}
-      <div className="navbar bg-color-dgreen fixed bottom-0 border-t border-lgrey w-screen min-h-[60px]">
+      <div className="navbar bg-color-dgreen fixed bottom-0 border-t border-lgrey w-screen min-h-[60px] z-[2]">
         <div className="flex flex-row justify-evenly">
           <div className="flex flex-col items-center pt-1 w-1/2">
           {location.pathname !== "/" && (

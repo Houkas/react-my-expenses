@@ -1,11 +1,33 @@
-import { useState } from "react";
-import { deleteExpense } from "../../../services/expenseService";
+import { useEffect, useState } from "react";
+import { deleteExpense, fetchCategories } from "../../../services/expenseService";
+import { ExpenseCategory } from "../../../types/ExpenseCategory";
+import { useAuth } from "../../Auth/Auth";
 import ExpenseDate from "../ExpenseDate/ExpenseDate";
 import "./ExpenseItem.css";
 
 function ExpenseItem(props: any) {
+  const { user } = useAuth();
+  const [categories, setCategories] = useState<ExpenseCategory[] | undefined>(
+    undefined
+  );
+  const [expenseCatId, setExpenseCatId] = useState(props.category_id);
   const [expenseTitle, seTitle] = useState(props.title);
+  const [expenseColorCategory, setColorCategory] = useState("");
   const expenseAmount: number = props.amount;
+
+  useEffect(() => {
+    //init
+    fetchCategories(user?.id).then((categories) => {
+      setCategories(categories);
+    });
+    if (categories?.length != 0 || categories != undefined) {
+      const colorCategory = categories?.find(category => category.id === expenseCatId);
+      if(colorCategory != undefined){
+        setColorCategory(colorCategory.color);
+      }
+      
+    }
+  }, [categories]);
 
   function editHandler() {
     seTitle("test");
@@ -18,14 +40,14 @@ function ExpenseItem(props: any) {
 
   return (
     <li className="mb-5">
-      <div className="flex flex-row justify-between mb-2 items-center">
+      <div className="flex flex-row justify-between mb-2 items-center border-l-2 pl-2" style={{borderColor: expenseColorCategory}}>
         <ExpenseDate date={props.date} />
         <div className="whitespace-nowrap overflow-hidden text-ellipsis m-1">
-          <h2 className="color-dgreen">{expenseTitle}</h2>
+          <h2 className="color-dgreen font-medium" style={{fontSize: "12px"}}>{expenseTitle}</h2>
         </div>
-        <div className="color-dgreen">{expenseAmount} €</div>
+        <span className="color-dgreen  font-medium" style={{fontSize: "12px"}}>{expenseAmount} €</span>
 
-        <div className="flex flex-col">
+        <div className="flex flex-row">
           <button className="bg-color-dgreen m-1 w-[25px] h-[25px] flex flex-row justify-center items-center" onClick={editHandler}>
             <img src="./edit_green.svg" />
           </button>

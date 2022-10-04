@@ -25,10 +25,12 @@ function NewCategory() {
     }
     //update
     if (categoriesUpdated == true) {
-      fetchCategories(user?.id).then((categories) => {
-        setCategories(categories);
-        setcategoriesUpdated(false);
-      });
+      async () => {
+        await fetchCategories(user?.id).then((categories) => {
+          setCategories(categories);
+          setcategoriesUpdated(false);
+        });
+      };
     }
   }, [categories]);
 
@@ -42,7 +44,6 @@ function NewCategory() {
       addExpenseCategory(newc, user?.id);
       setcategoriesUpdated(true);
       setInput("");
-      setColor("");
     }
   };
 
@@ -55,7 +56,6 @@ function NewCategory() {
   };
 
   const deleteHandler = (id: number) => {
-    debugger;
     deleteCategory(id);
     setCategories(
       categories?.filter((categorie) => {
@@ -86,20 +86,31 @@ function NewCategory() {
             onChange={inputHandler}
             value={input}
             id="category"
-            className=""
+            className="color-dgreen"
           ></input>
         </div>
-        <div className="flex flex-row flex-wrap items-center justify-center p-2 border-lgrey border bg-transparent color-dgreen font-sm">
+        <div className="flex flex-row flex-wrap items-center justify-center p-2 border-lgrey border bg-transparent">
           {categories?.map((categorie) => (
-            <button
-              className="p-2 text-white flex flex-row flex-wrap items-center justify-center"
-              onClick={() => {
-                deleteHandler(categorie.id);
+            <div
+              className={
+                "m-2 flex flex-row flex-wrap items-center justify-center px-2"
+              }
+              style={{
+                background:
+                  "linear-gradient(90deg, #1C221C 0%," + categorie.color,
+                border: "solid 1px " + categorie.color,
               }}
             >
-              {categorie.name}
-              <img src="./delete_red.svg" className="px-2" />
-            </button>
+              <span className="font-bold">{categorie.name}</span>
+              <button
+                className="p-2 text-white flex flex-row flex-wrap items-center justify-center"
+                onClick={() => {
+                  deleteHandler(categorie.id);
+                }}
+              >
+                <img src="./delete_red.svg" className="" />
+              </button>
+            </div>
           ))}
         </div>
       </div>

@@ -17,11 +17,12 @@ function ExpenseForm(props: any) {
   useEffect(() =>{
     fetchCategories(user?.id).then((categoriesFromDb) => {
       setCategories(categoriesFromDb);
+      setEnteredCategoryId(categoriesFromDb![0].id);
     })
   }, []);
 
   const [enteredTitle, setEnteredTitle] = useState("");
-  const [enteredCategory, setEnteredCategory] = useState("");
+  const [enteredCategoryId, setEnteredCategoryId] = useState<number | undefined>(undefined);
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
   const [enteredType, setEnteredType] = useState("courante");
@@ -30,7 +31,11 @@ function ExpenseForm(props: any) {
     setEnteredTitle(event.target.value);
   };
   const categoryChangeHandler = (event: any) => {
-    setEnteredCategory(event.target.value);
+    const catFound = categories?.find(category => 
+      category.name === event.target.value
+    );
+
+    setEnteredCategoryId(catFound?.id);
   };
   const amountChangeHandler = (event: any) => {
     setEnteredAmount(event.target.value);
@@ -47,7 +52,7 @@ function ExpenseForm(props: any) {
 
     const expenseData = new Expense(
       enteredTitle,
-      enteredCategory,
+      enteredCategoryId!,
       new Date(enteredDate).toLocaleDateString("en-US"),
       Number(enteredAmount),
       enteredType
@@ -58,7 +63,6 @@ function ExpenseForm(props: any) {
     props.onSaveExpenseData(expenseData);
 
     setEnteredTitle("");
-    setEnteredCategory("");
     setEnteredAmount("");
     setEnteredDate("");
     setEnteredType("");
@@ -82,16 +86,14 @@ function ExpenseForm(props: any) {
           {categories != undefined && categories.length > 0 && (
             <div className="p-2">
               <label className="color-dgreen">Catégorie</label>
-
               <select
                 name="types"
                 id="type-select"
                 className="p-2 border-dgreen border bg-transparent color-dgreen font-sm"
                 onChange={categoryChangeHandler}
-                defaultValue={"courante"}
               >
                 {categories?.map((category) => (
-                  <option>{category.name}</option>
+                  <option key={category.id}>{category.name}</option>
                 ))}
               </select>
             </div>
