@@ -1,17 +1,18 @@
 import "./Expenses.css";
 import Card from "../../UI/Card/Card";
 import ExpensesFilter from "../ExpensesFilter/ExpensesFilter";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ExpensesList from "../ExpensesList/ExpensesList";
 import ExpensesSum from "../ExpensesSum/ExpensesSum";
 import { Expense } from "../../../types/Expense";
-
+import { ExpensesContext, deleteExpenseHandler } from "../../Auth/Dashboard";
 function Expenses(props: any) {
+
   const [selectedYear, setYear] = useState("");
   const [expensesSum, setExpensesSum] = useState(0);
   const [isInit, setIsInit] = useState(true);
-  const [sumByAction, setSumByAction] = useState(props.action.toString());
   let fExpenses: any;
+  const expensesContext = useContext(ExpensesContext);
 
   if (selectedYear.toString() !== "") {
     fExpenses = props.expenses.filter((expense: any) => {
@@ -27,9 +28,11 @@ function Expenses(props: any) {
   }
 
   function deleteExpenseHandler(id:number){
+
+    console.log(expensesContext);
+    debugger;
     props.onDeleteExpense(id);
     setIsInit(false);
-    setSumByAction("onDelete");
   }
 
   useEffect(() => {
@@ -42,28 +45,25 @@ function Expenses(props: any) {
       });
       setIsInit(true);
     }
-    debugger;
     // update
-    if(fExpenses.length > 0 && expensesSum !== 0 && isInit=== false && sumByAction === "onAdd"){
+    if(fExpenses.length > 0 && expensesSum !== 0 && isInit=== false){
       fExpenses.forEach((element: Expense) => {
         setExpensesSum((prevState) =>{
           return element.amount + prevState
         });
-        setSumByAction("");
       });
     }
-    if(fExpenses.length > 0 && expensesSum !== 0 && isInit=== false && sumByAction === "onDelete"){
+    /*if(fExpenses.length > 0 && expensesSum !== 0 && isInit=== false){
       fExpenses.forEach((element: Expense) => {
         setExpensesSum((prevState) =>{
           return element.amount - prevState
         });
-        setSumByAction("");
       });
-    }
+    }*/
     if(fExpenses.length === 0){
       setExpensesSum(0)
     }
-  }, [fExpenses, sumByAction, props.action]);
+  }, [fExpenses]);
 
   return (
     <div>

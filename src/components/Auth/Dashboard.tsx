@@ -1,5 +1,6 @@
 import { User } from "@supabase/supabase-js";
-import { useEffect, useState } from "react";
+import React, { useContext } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchExpenses } from "../../services/expenseService";
 import { supabase } from "../../services/supabaseClient";
@@ -9,35 +10,44 @@ import ExpenseHome from "../Logic/ExpenseHome/ExpenseHome";
 import Header from "../UI/Header/Header";
 import Menu from "../UI/Menu/Menu";
 import Navbar from "../UI/Navbar/Navbar";
-
 import { useAuth } from "./Auth";
 
-export function Dashboard() {
+export interface ExpensesContext {
+  expenses: Expense[] | undefined,
+  setCurrentExpenses: (currentExpenses: Expense[] | undefined) => void;
+}
 
+export const ExpensesDefaultValue = {
+  expenses: [],
+  setCurrentExpenses: () => {}
+}
+
+export const ExpensesContext = createContext<ExpensesContext>(ExpensesDefaultValue);
+
+export function Dashboard() {
   // Get current user and signOut function from context
   const { user } = useAuth();
-  const [expensesFromDb, setExpensesFromDb] = useState<any[] | undefined>([]);
-  const [actionForSum, setactionForSum] = useState("");
+  const [expensesFromDb, setExpensesFromDb] = useState<Expense[] | undefined>([]);
 
-  useEffect(() =>{
-    fetchExpenses(user?.id).then(expenses => {
-      setExpensesFromDb(expenses)
-      // your response is an array, extract the first value
-    })
-    .catch(console.error)
+  useEffect(() => {
+    (async () => {
+      const expenses = await fetchExpenses(user?.id);
+      setExpensesFromDb(expenses);
+    })()
   }, []);
 
-  function addExpenseHandler(expense:Expense){
+  function addExpenseHandler(expense: Expense) {
     setExpensesFromDb((prevExpenses) => {
       return [expense, ...(prevExpenses ?? [])];
     });
-    setactionForSum("onAdd");
   }
 
-  function deleteExpenseHandler(id:number){
-    setExpensesFromDb(expensesFromDb?.filter((expense) => {
-      return expense.id !== id
-    }));
+  function deleteExpenseHandler(id: number) {
+    setExpensesFromDb(
+      expensesFromDb?.filter((expense) => {
+        return expense.id !== id;
+      })
+    );
   }
 
   const [isMenuVisivle, setIsMenuVisible] = useState(false);
@@ -52,8 +62,14 @@ export function Dashboard() {
     <div>
       <Header onOpeningMenu={handleOnOpeningMenu} />
       {isMenuVisivle === true && <Menu />}
-      <ExpenseHome expenses={expensesFromDb} onDeleteExpense={deleteExpenseHandler} action={actionForSum}/>
-      <Navbar onSaveExpenseData={addExpenseHandler}/>
+      <ExpensesContext.Provider value={{expensesFromDb, deleteExpenseHandler}}>
+        <ExpenseHome
+          expenses={expensesFromDb}
+          onDeleteExpense={deleteExpenseHandler}
+        />
+      </ExpensesContext.Provider>
+
+      <Navbar onSaveExpenseData={addExpenseHandler} />
     </div>
   );
 }

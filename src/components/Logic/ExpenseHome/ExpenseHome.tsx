@@ -12,7 +12,7 @@ function ExpenseHome(props:any){
 
     return (
       <div className="py-20 px-5">
-        {props.expenses !== undefined && <Expenses expenses={props.expenses} onDeleteExpense={deleteExpenseHandler} action={props.action}/>}
+        {props.expenses !== undefined && <Expenses expenses={props.expenses} onDeleteExpense={deleteExpenseHandler}/>}
       </div>
     );
 }
