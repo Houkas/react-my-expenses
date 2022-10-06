@@ -20,8 +20,10 @@ function ExpenseForm(props: any) {
 
   useEffect(() =>{
     fetchCategories(user?.id).then((categoriesFromDb) => {
-      setCategories(categoriesFromDb);
-      setEnteredCategoryId(categoriesFromDb![0].id);
+      if(categoriesFromDb!.length > 0){
+        setCategories(categoriesFromDb);
+        setEnteredCategoryId(categoriesFromDb![0].id);
+      }
     })
   }, []);
 

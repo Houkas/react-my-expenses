@@ -25,7 +25,7 @@ export function Signup() {
     const email = emailRef.current!.value
     const password = passwordRef.current!.value
     const passwordConfirm = passwordConfirmRef.current!.value
-    debugger;
+
     if(password !== passwordConfirm){
       alert('Les mots de passe ne correspondent pas');
       return;

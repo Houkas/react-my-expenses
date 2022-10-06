@@ -4,26 +4,33 @@ import "./ExpensesFilter.css";
 function ExpensesFilter(props: any) {
   const currentYear = new Date().getFullYear();
   const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
+  const currentDay = String(new Date().getDay() + 1).padStart(2, "0");
+  const [daySelected, setDaySelected] = useState(
+    [currentYear, currentMonth, currentDay].join("-")
+  );
   const [monthSelected, setMonthSelected] = useState(
     [currentYear, currentMonth].join("-")
   );
-  const [filterSelected, setFilterSelected] = useState("");
+  const [filterSelected, setFilterSelected] = useState("day");
 
   function selectYearHandler(event: any) {
     props.onYearSelected(event.target.value);
   }
   function selectFilterHandler(event: any) {
-    //props.onYearSelected(event.target.value);
     setFilterSelected(event.target.value);
-    console.log(event.target.value)
-    debugger;
   }
 
   return (
-    <div className="expenses-filter">
-      <div className="expenses-filter__control flex flex-col">
-        <label>Filter by</label>
-        <select value={filterSelected} onChange={selectFilterHandler}>
+    <div className="my-2">
+      <div className="flex flex-row w-full items-center justify-end">
+        <label className="color-lgrey mr-2">Filtrer par</label>
+        <select
+          value={filterSelected}
+          onChange={selectFilterHandler}
+          className={
+            "p-2 border-lgrey border bg-transparent color-lgrey font-sm rounded-none"
+          }
+        >
           <option value="day">Jour</option>
           <option value="month">Mois</option>
           <option value="year">Année</option>
@@ -31,35 +38,35 @@ function ExpensesFilter(props: any) {
 
         {filterSelected === "day" && (
           <>
-            <label>// jour</label>
-            <div className="relative">
-              <input
-                type="date"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Select date"
-              />
-            </div>
+            <input
+              type="date"
+              className="w-1/3 ml-2 p-2 border-lgrey border bg-transparent color-lgrey font-sm rounded-none"
+              placeholder="Select date"
+              defaultValue={daySelected}
+            />
           </>
         )}
 
         {filterSelected === "month" && (
           <>
-            <label>// mois</label>
-            <div className="relative">
-              <input
-                type="year"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Select date"
-                defaultValue={monthSelected}
-              />
-            </div>
+            <input
+              type="year"
+              className="w-1/3 ml-2 p-2 border-lgrey border bg-transparent color-lgrey font-sm rounded-none"
+              placeholder="Select date"
+              defaultValue={monthSelected}
+            />
           </>
         )}
 
         {filterSelected === "year" && (
           <>
-            <label>// année</label>
-            <select value={props.selected} onChange={selectYearHandler}>
+            <select
+              value={props.selected}
+              onChange={selectYearHandler}
+              className={
+                "ml-2 p-2 border-lgrey border bg-transparent color-lgrey font-sm rounded-none"
+              }
+            >
               <option value="2022">2022</option>
               <option value="2021">2021</option>
               <option value="2020">2020</option>
@@ -67,7 +74,6 @@ function ExpensesFilter(props: any) {
             </select>
           </>
         )}
-
       </div>
     </div>
   );

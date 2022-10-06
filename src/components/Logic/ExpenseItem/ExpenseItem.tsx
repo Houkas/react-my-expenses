@@ -18,15 +18,17 @@ function ExpenseItem(props: any) {
   const [expenseCatId, setExpenseCatId] = useState(props.category_id);
   const [expenseTitle, seTitle] = useState(props.title);
   const [expenseColorCategory, setColorCategory] = useState("");
+  const [isInit, setIsInit] = useState(true);
   const expenseAmount: number = props.amount;
 
   useEffect(() => {
     //init
-    if(categories?.length == 0 || categories == undefined)
+    if(categories?.length === 0 && isInit === true || categories === undefined && isInit === true)
     fetchCategories(user?.id).then((categories) => {
       setCategories(categories);
+      setIsInit(false);
     });
-    if (categories?.length != 0 || categories != undefined) {
+    if (categories?.length !== 0 && categories !== undefined || categories !== undefined) {
       const colorCategory = categories?.find(category => category.id === expenseCatId);
       if(colorCategory != undefined){
         setColorCategory(colorCategory.color);
@@ -46,7 +48,7 @@ function ExpenseItem(props: any) {
 
   return (
     <li className="mb-5">
-      <div className="flex flex-row justify-between mb-2 items-center border-l-2 pl-2" style={{borderColor: expenseColorCategory}}>
+      <div className="flex flex-row justify-between mb-2 items-center border-l-[5px] pl-2" style={{borderColor: expenseColorCategory}}>
         <ExpenseDate date={props.date} />
         <div className="whitespace-nowrap overflow-hidden text-ellipsis m-1">
           <h2 className="color-dgreen font-medium" style={{fontSize: "12px"}}>{expenseTitle}</h2>
