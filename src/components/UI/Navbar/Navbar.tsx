@@ -1,13 +1,9 @@
 import { useState } from "react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import ExpenseForm from "../../Logic/NewExpense/ExpenseForm";
 
 function Navbar(props: any) {
   const location = useLocation();
-
-  function saveExpenseDataHandler(enteredExpenseData: any) {
-    props.onSaveExpenseData(enteredExpenseData);
-  }
 
   let [isFormVisible, setIsFormVisible] = useState(false);
   function displayExpenseForm() {
@@ -22,7 +18,6 @@ function Navbar(props: any) {
     <>
       {isFormVisible === true && (
         <ExpenseForm
-          onSaveExpenseData={saveExpenseDataHandler}
           onHideExpenseForm={hideExpenseForm}
         />
       )}

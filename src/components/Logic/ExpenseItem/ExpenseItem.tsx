@@ -2,14 +2,19 @@ import { useEffect, useState } from "react";
 import { deleteExpense, fetchCategories } from "../../../services/expenseService";
 import { ExpenseCategory } from "../../../types/ExpenseCategory";
 import { useAuth } from "../../Auth/Auth";
+import useStore from "../../store/store-zustand";
 import ExpenseDate from "../ExpenseDate/ExpenseDate";
 import "./ExpenseItem.css";
 
 function ExpenseItem(props: any) {
+
+  const removeExpensesStore = useStore((state) => state.removeExpense);
+
   const { user } = useAuth();
   const [categories, setCategories] = useState<ExpenseCategory[] | undefined>(
     undefined
   );
+
   const [expenseCatId, setExpenseCatId] = useState(props.category_id);
   const [expenseTitle, seTitle] = useState(props.title);
   const [expenseColorCategory, setColorCategory] = useState("");
@@ -34,10 +39,10 @@ function ExpenseItem(props: any) {
     seTitle("test");
   };
 
-  function deleteHandler() {
+  function deleteHandler(){
     deleteExpense(props.id)
-    props.onDeleteExpense(props.id);
-  };
+    removeExpensesStore(props.id);
+  }
 
   return (
     <li className="mb-5">

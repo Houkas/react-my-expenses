@@ -5,9 +5,13 @@ import { supabase } from "../../../services/supabaseClient";
 import { Expense } from "../../../types/Expense";
 import { ExpenseCategory } from "../../../types/ExpenseCategory";
 import { useAuth } from "../../Auth/Auth";
+import useStore from "../../store/store-zustand";
 import "./ExpenseForm.css";
 
 function ExpenseForm(props: any) {
+
+  const addExpenseStore = useStore((state) => state.addExpense)
+
   // Get current user and signOut function from context
   const { user } = useAuth();
   const [categories, setCategories] = useState<ExpenseCategory[] | undefined>(
@@ -60,7 +64,9 @@ function ExpenseForm(props: any) {
 
     // utilisation d'un state management nécessaire :
     // actuellement flow data = ExpenseForm -> Navbar -> Dashboard -> ExpenseHome
-    props.onSaveExpenseData(expenseData);
+
+    //props.onSaveExpenseData(expenseData);
+    addExpenseStore(expenseData);
 
     setEnteredTitle("");
     setEnteredAmount("");

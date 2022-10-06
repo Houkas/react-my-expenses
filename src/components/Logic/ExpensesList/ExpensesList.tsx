@@ -25,7 +25,6 @@ function ExpensesList(props: any) {
             amount={expense.amount}
             date={expense.date}
             id={expense.id}
-            onDeleteExpense={deleteExpenseHandler}
           />
         ))}
       </ul>

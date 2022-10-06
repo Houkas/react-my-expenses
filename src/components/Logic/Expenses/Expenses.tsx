@@ -5,21 +5,25 @@ import { useContext, useEffect, useState } from "react";
 import ExpensesList from "../ExpensesList/ExpensesList";
 import ExpensesSum from "../ExpensesSum/ExpensesSum";
 import { Expense } from "../../../types/Expense";
-import { ExpensesContext, deleteExpenseHandler } from "../../Auth/Dashboard";
+
+import useStore from "../../store/store-zustand";
+
 function Expenses(props: any) {
 
+  const expensesStore = useStore((state) => state.expenses);
+  const setExpensesSumStore = useStore((state) => state.setExpensesSum);
+  const expensesSumStore = useStore((state) => state.expensesSum);
+
   const [selectedYear, setYear] = useState("");
-  const [expensesSum, setExpensesSum] = useState(0);
   const [isInit, setIsInit] = useState(true);
-  let fExpenses: any;
-  const expensesContext = useContext(ExpensesContext);
+  let fExpenses: Expense[] | undefined;
 
   if (selectedYear.toString() !== "") {
-    fExpenses = props.expenses.filter((expense: any) => {
+    fExpenses = expensesStore!.filter((expense: any) => {
       return new Date(expense.date).getFullYear().toString() === selectedYear;
     });
   } else {
-    fExpenses = props.expenses;
+    fExpenses = expensesStore;
   }
 
   function yearFilterHandler(yearSelected: any) {
@@ -27,41 +31,26 @@ function Expenses(props: any) {
     setIsInit(false);
   }
 
-  function deleteExpenseHandler(id:number){
-
-    console.log(expensesContext);
-    debugger;
-    props.onDeleteExpense(id);
-    setIsInit(false);
-  }
-
   useEffect(() => {
     // init
-    if(fExpenses.length > 0 && expensesSum === 0){
-      fExpenses.forEach((element: Expense) => {
-        setExpensesSum((prevState) =>{
-          return element.amount + prevState
-        });
+    if(fExpenses!.length > 0 && expensesSumStore === 0){
+      let sum = 0;
+      fExpenses!.forEach((element: Expense) => {
+        sum = sum + element.amount
       });
-      setIsInit(true);
+      setExpensesSumStore(sum)
+      setIsInit(false);
     }
     // update
-    if(fExpenses.length > 0 && expensesSum !== 0 && isInit=== false){
-      fExpenses.forEach((element: Expense) => {
-        setExpensesSum((prevState) =>{
-          return element.amount + prevState
-        });
+    if(fExpenses!.length > 0 && expensesSumStore !== 0 && isInit=== false){
+      let sum = 0;
+      fExpenses!.forEach((element: Expense) => {
+        sum = sum + element.amount
       });
+      setExpensesSumStore(sum);
     }
-    /*if(fExpenses.length > 0 && expensesSum !== 0 && isInit=== false){
-      fExpenses.forEach((element: Expense) => {
-        setExpensesSum((prevState) =>{
-          return element.amount - prevState
-        });
-      });
-    }*/
-    if(fExpenses.length === 0){
-      setExpensesSum(0)
+    if(fExpenses!.length === 0){
+      setExpensesSumStore(0);
     }
   }, [fExpenses]);
 
@@ -72,9 +61,9 @@ function Expenses(props: any) {
         onYearSelected={yearFilterHandler}
       />
       <Card className="expenses">
-        <ExpensesList items={fExpenses} onDeleteExpense={deleteExpenseHandler}/>
+        <ExpensesList items={fExpenses}/>
       </Card>
-      <ExpensesSum sum={expensesSum}/> 
+      <ExpensesSum sum={expensesSumStore}/> 
     </div>
   );
 }
