@@ -56,9 +56,10 @@ function ExpenseItem(props: any) {
         <span className="color-dgreen  font-medium" style={{fontSize: "12px"}}>{expenseAmount} €</span>
 
         <div className="flex flex-row">
-          <button className="bg-color-dgreen m-1 w-[25px] h-[25px] flex flex-row justify-center items-center" onClick={editHandler}>
+          {/* <button className="bg-color-dgreen m-1 w-[25px] h-[25px] flex flex-row justify-center items-center" onClick={editHandler}>
             <img src="./edit_green.svg" />
-          </button>
+          </button>*/}
+         
           <button className="bg-color-dgreen m-1 w-[25px] h-[25px] flex flex-row justify-center items-center" onClick={deleteHandler}>
             <img src="./delete_red.svg" />
           </button>

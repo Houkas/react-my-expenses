@@ -131,7 +131,7 @@ function Expenses() {
     }
 
     
-  }, [selectedYear, selectedMonth, selectedDay, typeFilter]);
+  }, [selectedYear, selectedMonth, selectedDay, typeFilter, expensesStore]);
 
   return (
     <div>

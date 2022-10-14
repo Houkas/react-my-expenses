@@ -71,10 +71,6 @@ function ExpenseForm(props: any) {
       enteredType
     );
 
-    // utilisation d'un state management nécessaire :
-    // actuellement flow data = ExpenseForm -> Navbar -> Dashboard -> ExpenseHome
-
-    //props.onSaveExpenseData(expenseData);
     addExpenseStore(expenseData);
 
     setEnteredTitle("");
@@ -87,7 +83,7 @@ function ExpenseForm(props: any) {
 
   return (
     <form onSubmit={submitHandler} className="flex justify-center">
-      <div className="bg-color-lgrey absolute bottom-[60px] p-2">
+      <div className="bg-color-lgrey absolute bottom-[60px] p-2 z-[2]">
         <div className="flex flex-row">
           <div className="p-2">
             <label className="color-dgreen">Titre</label>
@@ -146,7 +142,6 @@ function ExpenseForm(props: any) {
             <label className="color-dgreen">Date</label>
             <input
               type="Date"
-              defaultValue={daySelected}
               value={enteredDate}
               min="2019-01-01"
               onChange={dateChangeHandler}

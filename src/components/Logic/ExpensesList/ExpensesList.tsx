@@ -8,8 +8,6 @@ import "./ExpensesList.css";
 
 function ExpensesList(props: any) {
 
-  const expensesStore = useStore((state) => state.expenses);
-
   if (props.items === undefined || props.items?.length === 0) {
     return (
       <h2 className="expenses-list__fallback">Aucune dépenses trouvées</h2>
