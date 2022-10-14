@@ -61,6 +61,9 @@ function ExpenseForm(props: any) {
   };
 
   function submitHandler(event: any) {
+    /* TO DO 
+      gérer les enregistrements de montant de type float -> changement de la colonne en base ?
+    */
     event.preventDefault();
 
     const expenseData = new Expense(

@@ -3,6 +3,10 @@ import React, { useEffect, useState } from "react";
 import "./ExpensesFilter.css";
 
 function ExpensesFilter(props: any) {
+  /* 
+    TO DO :
+    Pouvoir filtrer par type de dépense
+  */
 
   const currentYear = new Date().getFullYear();
   const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
