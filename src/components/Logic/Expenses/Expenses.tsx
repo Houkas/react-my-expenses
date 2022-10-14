@@ -103,6 +103,33 @@ function Expenses() {
      
     }
 
+    //by day
+    if (expensesFilteredStore !== undefined && isInit === false && typeFilter === "day") {
+      (async () => {
+        let fExpenses;
+        fExpenses = expensesStore!.filter((expense: Expense) => {
+          const expenseDay= (String(new Date(expense.date).getDate()).padStart(2, "0"));
+          const expenseMonth= (String(new Date(expense.date).getMonth() + 1).padStart(2, "0"));
+          const expenseYear = new Date(expense.date).getFullYear().toString();
+          const expenseYearMonthDay =  [expenseYear, expenseMonth, expenseDay].join("-")
+          return expenseYearMonthDay === selectedDay;
+        });
+
+        setExpensesFilteredStore(fExpenses);
+        let sum = 0;
+        fExpenses!.forEach((element: Expense) => {
+          sum = sum + element.amount
+        });
+        setExpensesSumStore(sum);
+        if ((fExpenses !== undefined
+          && fExpenses!.length === 0)
+          || fExpenses?.length === 0) {
+          setExpensesSumStore(0);
+        }
+      })()
+     
+    }
+
     
   }, [selectedYear, selectedMonth, selectedDay, typeFilter]);
 

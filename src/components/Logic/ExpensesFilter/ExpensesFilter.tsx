@@ -44,11 +44,10 @@ function ExpensesFilter(props: any) {
 
   function selectDayHandler(event: any, isInit: boolean) {
     if(isInit === true){
-      props.onDaySelected(currentDay.toString())
+      props.onDaySelected(daySelected.toString())
     } else {
       props.onDaySelected(event.target.value);
     }
-
   }
 
   function selectFilterHandler(event: any) {
@@ -87,7 +86,7 @@ function ExpensesFilter(props: any) {
           <>
             <input
               type="date"
-              onChange={() => selectDayHandler}
+              onChange={(event) => selectDayHandler(event,false)}
               className="w-[110px] ml-2 p-2 border-lgrey border bg-transparent color-lgrey font-sm rounded-none"
               placeholder="Select date"
               defaultValue={daySelected}
