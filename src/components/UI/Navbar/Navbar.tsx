@@ -28,7 +28,7 @@ function Navbar(props: any) {
               <>
                 <NavLink to="/">
                   <button className="btn btn-square btn-ghost flex flex-col items-center">
-                    <img src={"./plus.svg"} />
+                    <img src={"./Plus.svg"} />
                     <span className="color-green text-xs">Statistiques</span>
                   </button>
                 </NavLink>
