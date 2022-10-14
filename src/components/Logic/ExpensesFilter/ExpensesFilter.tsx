@@ -35,7 +35,7 @@ function ExpensesFilter(props: any) {
 
   function selectMonthHandler(event: any, isInit: boolean) {
     if(isInit === true){
-      props.onMonthSelected(currentMonth.toString())
+      props.onMonthSelected(monthSelected.toString())
     } else {
       props.onMonthSelected(event.target.value);
     }

@@ -17,23 +17,29 @@ function Expenses() {
   const expensesSumStore = useStore((state) => state.expensesSum);
 
   const [selectedYear, setYear] = useState(new Date().getFullYear().toString());
-  const [selectedMonth, setMonth] = useState(String(new Date().getMonth() + 1).padStart(2, "0"));
+  const [selectedMonth, setMonth] = useState(
+    [selectedYear, String(new Date().getMonth() + 1).padStart(2, "0")].join('-')
+    );
   const [selectedDay, setDay] = useState(String(new Date().getDay() + 1).padStart(2, "0"));
   const [isInit, setIsInit] = useState(true);
+  const [typeFilter, setTypeFilter] = useState('');
 
   function yearFilterHandler(yearSelected: string) {
     setYear(yearSelected);
     setIsInit(false);
+    setTypeFilter('year');
   }
 
   function monthFilterHandler(monthSelected: string) {
     setMonth(monthSelected);
     setIsInit(false);
+    setTypeFilter('month');
   }
 
   function dayFilterHandler(daySelected: string) {
     setDay(daySelected);
     setIsInit(false);
+    setTypeFilter('day');
   }
 
   useEffect(() => {
@@ -49,7 +55,7 @@ function Expenses() {
     }
     // update
     //by year
-    if (expensesFilteredStore !== undefined && isInit === false) {
+    if (expensesFilteredStore !== undefined && isInit === false && typeFilter === "year") {
       (async () => {
         let fExpenses;
         fExpenses = expensesStore!.filter((expense: Expense) => {
@@ -71,8 +77,34 @@ function Expenses() {
      
     }
 
+    //by month
+    if (expensesFilteredStore !== undefined && isInit === false && typeFilter === "month") {
+      (async () => {
+        let fExpenses;
+        fExpenses = expensesStore!.filter((expense: Expense) => {
+          const expenseMonth = (String(new Date(expense.date).getMonth() + 1).padStart(2, "0"));
+          const expenseYear = new Date().getFullYear().toString();
+          const expenseYearMonth =  [expenseYear, expenseMonth].join("-")
+          return expenseYearMonth === selectedMonth;
+        });
+
+        setExpensesFilteredStore(fExpenses);
+        let sum = 0;
+        fExpenses!.forEach((element: Expense) => {
+          sum = sum + element.amount
+        });
+        setExpensesSumStore(sum);
+        if ((fExpenses !== undefined
+          && fExpenses!.length === 0)
+          || fExpenses?.length === 0) {
+          setExpensesSumStore(0);
+        }
+      })()
+     
+    }
+
     
-  }, [selectedYear, selectedMonth, selectedDay]);
+  }, [selectedYear, selectedMonth, selectedDay, typeFilter]);
 
   return (
     <div>
