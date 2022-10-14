@@ -18,6 +18,13 @@ function ExpenseForm(props: any) {
     undefined
   );
 
+  const currentYear = new Date().getFullYear();
+  const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
+  const currentDay = String(new Date().getDay() + 1).padStart(2, "0");
+  const [daySelected, setDaySelected] = useState(
+    [currentYear, currentMonth, currentDay].join("-")
+  );
+
   useEffect(() =>{
     fetchCategories(user?.id).then((categoriesFromDb) => {
       if(categoriesFromDb!.length > 0){
@@ -139,6 +146,7 @@ function ExpenseForm(props: any) {
             <label className="color-dgreen">Date</label>
             <input
               type="Date"
+              defaultValue={daySelected}
               value={enteredDate}
               min="2019-01-01"
               onChange={dateChangeHandler}

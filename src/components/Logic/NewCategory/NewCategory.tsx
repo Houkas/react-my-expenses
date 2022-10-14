@@ -90,6 +90,9 @@ function NewCategory() {
           ></input>
         </div>
         <div className="flex flex-row flex-wrap items-center justify-center p-2 border-lgrey border bg-transparent">
+          {categories === undefined && 
+            <p>Vous n'avez pas de catégorie, ajoutez-en une !</p>
+          }
           {categories?.map((categorie) => (
             <div
               className={
