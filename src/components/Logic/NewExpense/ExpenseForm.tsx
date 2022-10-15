@@ -1,7 +1,5 @@
-import { User } from "@supabase/supabase-js";
 import React, { SetStateAction, useEffect, useState } from "react";
 import { addExpense, fetchCategories } from "../../../services/expenseService";
-import { supabase } from "../../../services/supabaseClient";
 import { Expense } from "../../../types/Expense";
 import { ExpenseCategory } from "../../../types/ExpenseCategory";
 import { useAuth } from "../../Auth/Auth";
@@ -13,7 +11,7 @@ function ExpenseForm(props: any) {
   const addExpenseStore = useStore((state) => state.addExpense)
 
   // Get current user and signOut function from context
-  const { user } = useAuth();
+  const user  = useAuth()?.user;
   const [categories, setCategories] = useState<ExpenseCategory[] | undefined>(
     undefined
   );

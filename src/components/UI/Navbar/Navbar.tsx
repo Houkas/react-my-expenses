@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { AuthProvider } from "../../Auth/Auth";
 import ExpenseForm from "../../Logic/NewExpense/ExpenseForm";
 
 function Navbar(props: any) {
@@ -17,14 +18,17 @@ function Navbar(props: any) {
   return (
     <>
       {isFormVisible === true && (
-        <ExpenseForm
-          onHideExpenseForm={hideExpenseForm}
-        />
+        <AuthProvider>
+          <ExpenseForm
+            onHideExpenseForm={hideExpenseForm}
+          />
+        </AuthProvider>
+
       )}
       <div className="navbar bg-color-dgreen fixed bottom-0 border-t border-lgrey w-screen min-h-[60px] z-[2]">
         <div className="flex flex-row justify-evenly">
           <div className="flex flex-col items-center pt-1 w-1/2">
-          {location.pathname !== "/" && (
+            {location.pathname !== "/" && (
               <>
                 <NavLink to="/">
                   <button className="btn btn-square btn-ghost flex flex-col items-center">
@@ -33,31 +37,31 @@ function Navbar(props: any) {
                   </button>
                 </NavLink>
               </>
-          )}
-          {location.pathname === "/" && (
-            <button
-              className="btn btn-square btn-ghost flex flex-col items-center"
-              onClick={displayExpenseForm}
-            >
-              {isFormVisible === false && (
-                <>
-                  <img src={"./Plus.svg"} />
-                  <span className="color-green text-xs">
-                    Ajouter une dépense
-                  </span>
-                </>
-              )}
-              {isFormVisible === true && (
-                <>
-                  <img
-                    src={"./green-close.svg"}
-                    className="w-[30px] h-[30px]"
-                  />
-                  <span className="color-green text-xs">Annuler</span>
-                </>
-              )}
-            </button>
-          )}
+            )}
+            {location.pathname === "/" && (
+              <button
+                className="btn btn-square btn-ghost flex flex-col items-center"
+                onClick={displayExpenseForm}
+              >
+                {isFormVisible === false && (
+                  <>
+                    <img src={"./Plus.svg"} />
+                    <span className="color-green text-xs">
+                      Ajouter une dépense
+                    </span>
+                  </>
+                )}
+                {isFormVisible === true && (
+                  <>
+                    <img
+                      src={"./green-close.svg"}
+                      className="w-[30px] h-[30px]"
+                    />
+                    <span className="color-green text-xs">Annuler</span>
+                  </>
+                )}
+              </button>
+            )}
           </div>
           <div className="flex flex-col items-center pt-1 w-1/2">
 
@@ -73,10 +77,10 @@ function Navbar(props: any) {
             )}
             {location.pathname === "/statistiques" && (
               <>
-                  <button className="btn btn-square btn-ghost flex flex-col items-center opacity-50" disabled>
-                    <img src={"./Sort.svg"} />
-                    <span className="color-green text-xs">Statistiques</span>
-                  </button>
+                <button className="btn btn-square btn-ghost flex flex-col items-center opacity-50" disabled>
+                  <img src={"./Sort.svg"} />
+                  <span className="color-green text-xs">Statistiques</span>
+                </button>
               </>
             )}
 

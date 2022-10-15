@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import './NewExpense.css'
 import './ExpenseForm';
 import ExpenseForm from './ExpenseForm';
+import { AuthProvider } from '../../Auth/Auth';
 
-function NewExpense(props:any) {
+function NewExpense(props: any) {
 
-    function saveExpenseDataHandler(enteredExpenseData:any){
+    function saveExpenseDataHandler(enteredExpenseData: any) {
         const expenseData = {
             ...enteredExpenseData,
             id: Math.random().toString()
@@ -15,18 +16,25 @@ function NewExpense(props:any) {
     }
 
     let [isFormVisible, setIsFormVisible] = useState(false);
-    function displayExpenseForm(){
+    function displayExpenseForm() {
         setIsFormVisible(true)
     }
 
-    function hideExpenseForm(){
+    function hideExpenseForm() {
         setIsFormVisible(false);
     }
 
-    return(
+    return (
         <div className='new-expense'>
-            {isFormVisible === false && <button onClick={displayExpenseForm}>Ajouter une dépense</button>}
-            {isFormVisible === true && <ExpenseForm onSaveExpenseData={saveExpenseDataHandler} onHideExpenseForm={hideExpenseForm}/>}
+            {isFormVisible === false &&
+                <button onClick={displayExpenseForm}>Ajouter une dépense</button>
+            }
+            {isFormVisible === true &&
+                <AuthProvider>
+                    <ExpenseForm onSaveExpenseData={saveExpenseDataHandler} onHideExpenseForm={hideExpenseForm} />
+                </AuthProvider>
+                
+            }
         </div>
     );
 }
