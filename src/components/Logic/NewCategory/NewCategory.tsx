@@ -34,8 +34,8 @@ function NewCategory() {
     }
   }, [categories]);
 
-  const categoriesHandler = (event: any) => {
-    if (event.keyCode === 13) {
+  const categoriesHandler = (event: any, btnClicked: boolean) => {
+    if (event?.keyCode === 13 || btnClicked === true) {
       let newc = new ExpenseCategory(event.target.value.toString(), color);
       // Enter key pressed
       setCategories((prevCategories): ExpenseCategory[] | undefined => {
@@ -76,18 +76,26 @@ function NewCategory() {
             id="body"
             name="body"
             value={color}
-            className="w-[50px] h-[50px]"
+            className="w-[60px] h-[45px]"
             onChange={colorHandler}
           />
           <input
             type={"text"}
-            onKeyDown={categoriesHandler}
+            onKeyDown={(event) => categoriesHandler(event, false)}
             placeholder="Ajouter une catégorie"
             onChange={inputHandler}
             value={input}
             id="category"
             className="color-dgreen"
           ></input>
+          <button
+            onClick={() => categoriesHandler(null, true)}
+            className="color-dgreen font bg-color-green font-bold focus:ring-4 focus:ring-blue-300
+            px-2 py-2 focus:outline-none"
+            style={{ fontSize: "14px" }}
+          >
+            Ajouter
+          </button>
         </div>
         <div className="flex flex-row flex-wrap items-center justify-center p-2 border-lgrey border bg-transparent">
           {categories === undefined && 
