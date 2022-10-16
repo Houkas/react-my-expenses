@@ -28,8 +28,8 @@ function Navbar(props: any) {
               <>
                 <NavLink to="/">
                   <button className="btn btn-square btn-ghost flex flex-col items-center">
-                    <img src={"./plus.svg"} />
-                    <span className="color-green text-xs">Statistiques</span>
+                    <img src={"./Plus.svg"} />
+                    <span className="color-green text-xs">Mes dépenses</span>
                   </button>
                 </NavLink>
               </>
@@ -41,7 +41,7 @@ function Navbar(props: any) {
             >
               {isFormVisible === false && (
                 <>
-                  <img src={"./plus.svg"} />
+                  <img src={"./Plus.svg"} />
                   <span className="color-green text-xs">
                     Ajouter une dépense
                   </span>
@@ -65,7 +65,7 @@ function Navbar(props: any) {
               <>
                 <NavLink to="statistiques">
                   <button className="btn btn-square btn-ghost flex flex-col items-center">
-                    <img src={"./sort.svg"} />
+                    <img src={"./Sort.svg"} />
                     <span className="color-green text-xs">Statistiques</span>
                   </button>
                 </NavLink>
@@ -74,7 +74,7 @@ function Navbar(props: any) {
             {location.pathname === "/statistiques" && (
               <>
                   <button className="btn btn-square btn-ghost flex flex-col items-center opacity-50" disabled>
-                    <img src={"./sort.svg"} />
+                    <img src={"./Sort.svg"} />
                     <span className="color-green text-xs">Statistiques</span>
                   </button>
               </>

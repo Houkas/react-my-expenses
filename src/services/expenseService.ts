@@ -22,10 +22,11 @@ export async function addExpense(expense: Expense, userId: string | undefined) {
   return data;
 }
 
-export async function fetchExpenses(userId: string | undefined) {
+export async function fetchExpenses(userId: string | undefined): Promise<Expense[] | undefined> {
   const { data: expenses, error } = await supabase
     .from("expenses")
-    .select("*");
+    .select("*")
+    .order('date', {ascending: true});
   if (error){
     console.log("error", error);
   } else{

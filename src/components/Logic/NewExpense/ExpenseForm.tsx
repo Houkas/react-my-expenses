@@ -18,6 +18,13 @@ function ExpenseForm(props: any) {
     undefined
   );
 
+  const currentYear = new Date().getFullYear();
+  const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
+  const currentDay = String(new Date().getDay() + 1).padStart(2, "0");
+  const [daySelected, setDaySelected] = useState(
+    [currentYear, currentMonth, currentDay].join("-")
+  );
+
   useEffect(() =>{
     fetchCategories(user?.id).then((categoriesFromDb) => {
       if(categoriesFromDb!.length > 0){
@@ -64,10 +71,6 @@ function ExpenseForm(props: any) {
       enteredType
     );
 
-    // utilisation d'un state management nécessaire :
-    // actuellement flow data = ExpenseForm -> Navbar -> Dashboard -> ExpenseHome
-
-    //props.onSaveExpenseData(expenseData);
     addExpenseStore(expenseData);
 
     setEnteredTitle("");
@@ -80,7 +83,7 @@ function ExpenseForm(props: any) {
 
   return (
     <form onSubmit={submitHandler} className="flex justify-center">
-      <div className="bg-color-lgrey absolute bottom-[60px] p-2">
+      <div className="bg-color-lgrey absolute bottom-[60px] p-2 z-[2]">
         <div className="flex flex-row">
           <div className="p-2">
             <label className="color-dgreen">Titre</label>
