@@ -36,7 +36,13 @@ function NewCategory() {
 
   const categoriesHandler = (event: any, btnClicked: boolean) => {
     if (event?.keyCode === 13 || btnClicked === true) {
-      let newc = new ExpenseCategory(event.target.value.toString(), color);
+      let newc: ExpenseCategory;
+      if(event?.keyCode === 13){
+        newc = new ExpenseCategory(event.target.value.toString(), color);
+      } else {
+        newc = new ExpenseCategory(input.toString(), color);
+      }
+      debugger;
       // Enter key pressed
       setCategories((prevCategories): ExpenseCategory[] | undefined => {
         return [...(prevCategories ?? []), newc];
