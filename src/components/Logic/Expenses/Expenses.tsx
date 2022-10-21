@@ -62,6 +62,9 @@ function Expenses() {
           const expenseDate = (new Date(expense.date).getFullYear()).toString();
           return expenseDate === selectedYear;
         });
+        fExpenses.sort((a, b) => {
+          return new Date(a.date).getTime() - new Date(b.date).getTime();
+        })
         setExpensesFilteredStore(fExpenses);
         let sum = 0;
         fExpenses!.forEach((element: Expense) => {
@@ -142,7 +145,7 @@ function Expenses() {
         onDaySelected={dayFilterHandler}
       />
       <Card className="expenses">
-        <ExpensesList items={expensesFilteredStore} />
+        <ExpensesList />
       </Card>
       <ExpensesSum sum={expensesSumStore} />
     </div>

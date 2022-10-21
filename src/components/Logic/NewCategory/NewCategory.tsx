@@ -42,7 +42,6 @@ function NewCategory() {
       } else {
         newc = new ExpenseCategory(input.toString(), color);
       }
-      debugger;
       // Enter key pressed
       setCategories((prevCategories): ExpenseCategory[] | undefined => {
         return [...(prevCategories ?? []), newc];
