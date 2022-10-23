@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { AuthProvider } from "../../Auth/Auth";
 import ExpenseForm from "../../Logic/NewExpense/ExpenseForm";
+import useStore from "../../store/store-zustand";
 
-function Navbar(props: any) {
+function Navbar() {
   const location = useLocation();
-
+  const selectedExpenseToEdit = useStore((state) => state.selectedExpenseToEdit);
   let [isFormVisible, setIsFormVisible] = useState(false);
   function displayExpenseForm() {
     setIsFormVisible(!isFormVisible);
@@ -15,12 +16,19 @@ function Navbar(props: any) {
     setIsFormVisible(false);
   }
 
+  useEffect( () => {
+    if(selectedExpenseToEdit !== undefined){
+      displayExpenseForm()
+    }
+  },[selectedExpenseToEdit])
+
   return (
     <>
       {isFormVisible === true && (
         <AuthProvider>
           <ExpenseForm
             onHideExpenseForm={hideExpenseForm}
+            isExpenseToEdit={selectedExpenseToEdit !== undefined ? true : false}
           />
         </AuthProvider>
 

@@ -24,6 +24,7 @@ function ExpensesList() {
             amount={expense.amount}
             date={expense.date}
             id={expense.id}
+            type={expense.type}
           />
         ))}
       </ul>

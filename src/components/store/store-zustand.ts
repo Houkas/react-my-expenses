@@ -1,16 +1,21 @@
 import create from "zustand"
 import { Expense } from "../../types/Expense";
+import { ExpenseCategory } from "../../types/ExpenseCategory";
 
 interface ExpenseState {
+    selectedExpenseToEdit: Expense | undefined,
     expenses: Expense[] | undefined,
     expensesSum: number,
     expensesFiltered: Expense[] | undefined,
     yearFilter: string | null,
     monthFilter: string | null,
     dayFilter: string | null,
+    expenseCategories: ExpenseCategory[] | undefined,
+    setExpenseCategories: (expenseCategories: ExpenseCategory[] | undefined) => void,
     setYearFilter: (year: string) => void,
     setMonthFilter: (month: string) => void,
     setDayFilter: (day: string) => void,
+    setExpenseToEdit: (expense: Expense | undefined) => void,
     setExpenses: (expenses: Expense[] | undefined) => void,
     setExpensesFiltered: (expenses: Expense[] | undefined) => void,
     addExpense: (expenses: Expense) => void,
@@ -19,12 +24,17 @@ interface ExpenseState {
 }
 
 const useStore = create<ExpenseState>((set) => ({
+    selectedExpenseToEdit: undefined,
     expenses: undefined,
     expensesSum: 0,
     expensesFiltered: undefined,
     yearFilter: null,
     monthFilter: null,
     dayFilter: null,
+    expenseCategories: undefined,
+    setExpenseCategories: (expenseCategoriesDB: ExpenseCategory[] | undefined) => set(
+        () => ({expenseCategories: expenseCategoriesDB})
+    ),
     setYearFilter: (year: string) => set(
         () => ({yearFilter: year})
     ),
@@ -33,6 +43,9 @@ const useStore = create<ExpenseState>((set) => ({
     ),
     setDayFilter: (day: string) => set(
         () => ({dayFilter: day})
+    ),
+    setExpenseToEdit: (expense: Expense |undefined) => set(
+        () => ({selectedExpenseToEdit: expense})
     ),
     setExpenses: (expenses: Expense[] | undefined) => set(
         () => ({ expenses: expenses })

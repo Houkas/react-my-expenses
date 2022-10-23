@@ -9,9 +9,10 @@ import "./ExpenseForm.css";
 function ExpenseForm(props: any) {
 
   const addExpenseStore = useStore((state) => state.addExpense)
+  const selectedExpenseToEdit = useStore((state) => state.selectedExpenseToEdit)
 
   // Get current user and signOut function from context
-  const user  = useAuth()?.user;
+  const user = useAuth()?.user;
   const [categories, setCategories] = useState<ExpenseCategory[] | undefined>(
     undefined
   );
@@ -23,26 +24,35 @@ function ExpenseForm(props: any) {
     [currentYear, currentMonth, currentDay].join("-")
   );
 
-  useEffect(() =>{
+  const [enteredTitle, setEnteredTitle] = useState("");
+  const [enteredCategoryId, setEnteredCategoryId] = useState<number | undefined>(undefined);
+  const [enteredAmount, setEnteredAmount] = useState(0);
+  const [enteredDate, setEnteredDate] = useState("");
+  const [enteredType, setEnteredType] = useState("courante");
+
+  useEffect(() => {
     fetchCategories(user?.id).then((categoriesFromDb) => {
-      if(categoriesFromDb!.length > 0){
+      if (categoriesFromDb!.length > 0) {
         setCategories(categoriesFromDb);
         setEnteredCategoryId(categoriesFromDb![0].id);
       }
     })
-  }, []);
+    if (selectedExpenseToEdit !== undefined) {
+      setEnteredTitle(selectedExpenseToEdit.title);
+      setEnteredCategoryId(selectedExpenseToEdit.category_id);
+      setEnteredAmount(selectedExpenseToEdit.amount);
+      setEnteredDate(selectedExpenseToEdit.date);
+      setEnteredType(selectedExpenseToEdit.type);
+    }
+  }, [selectedExpenseToEdit]);
 
-  const [enteredTitle, setEnteredTitle] = useState("");
-  const [enteredCategoryId, setEnteredCategoryId] = useState<number | undefined>(undefined);
-  const [enteredAmount, setEnteredAmount] = useState("");
-  const [enteredDate, setEnteredDate] = useState("");
-  const [enteredType, setEnteredType] = useState("courante");
+
 
   const titleChangeHandler = (event: any) => {
     setEnteredTitle(event.target.value);
   };
   const categoryChangeHandler = (event: any) => {
-    const catFound = categories?.find(category => 
+    const catFound = categories?.find(category =>
       category.name === event.target.value
     );
 
@@ -75,7 +85,7 @@ function ExpenseForm(props: any) {
     addExpenseStore(expenseData);
 
     setEnteredTitle("");
-    setEnteredAmount("");
+    setEnteredAmount(0);
     setEnteredDate("");
     setEnteredType("");
 
@@ -151,14 +161,27 @@ function ExpenseForm(props: any) {
           </div>
         </div>
         <div className="p-2">
-          <button
-            type="submit"
-            className="color-dgreen font bg-color-green font-bold focus:ring-4 focus:ring-blue-300
-         px-2 py-2 mr-2 mb-2  focus:outline-none"
-            style={{ fontSize: "14px" }}
-          >
-            Ajouter une dépense
-          </button>
+          {props.isExpenseToEdit === false &&
+            <button
+              type="submit"
+              className="color-dgreen font bg-color-green font-bold focus:ring-4 focus:ring-blue-300
+        px-2 py-2 mr-2 mb-2  focus:outline-none"
+              style={{ fontSize: "14px" }}
+            >
+              Ajouter une dépense
+            </button>
+          }
+          {props.isExpenseToEdit === true &&
+            <button
+              type="submit"
+              className="color-dgreen font bg-color-green font-bold focus:ring-4 focus:ring-blue-300
+        px-2 py-2 mr-2 mb-2  focus:outline-none"
+              style={{ fontSize: "14px" }}
+            >
+              Modifier la dépense
+            </button>
+          }
+
         </div>
       </div>
     </form>

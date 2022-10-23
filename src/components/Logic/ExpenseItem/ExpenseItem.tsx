@@ -3,6 +3,7 @@ import {
   deleteExpense,
   fetchCategories,
 } from "../../../services/expenseService";
+import { Expense } from "../../../types/Expense";
 import { ExpenseCategory } from "../../../types/ExpenseCategory";
 import { useAuth } from "../../Auth/Auth";
 import useStore from "../../store/store-zustand";
@@ -10,12 +11,10 @@ import ExpenseDate from "../ExpenseDate/ExpenseDate";
 import "./ExpenseItem.css";
 
 function ExpenseItem(props: any) {
-  const removeExpensesStore = useStore((state) => state.removeExpense);
 
-  const { user } = useAuth();
-  const [categories, setCategories] = useState<ExpenseCategory[] | undefined>(
-    undefined
-  );
+  const removeExpensesStore = useStore((state) => state.removeExpense);
+  const setSelectedExpenseToEdit = useStore((state) => state.setExpenseToEdit);
+  const expenseCategories = useStore((state) => state.expenseCategories);
 
   const [expenseCatId, setExpenseCatId] = useState(0);
   const [expenseTitle, setTitle] = useState("");
@@ -27,30 +26,30 @@ function ExpenseItem(props: any) {
     //init
     setTitle(props.title);
     setExpenseCatId(props.category_id);
-    if (
-      (categories?.length === 0 && isInit === true) ||
-      (categories === undefined && isInit === true)
-    )
-      fetchCategories(user?.id).then((categories) => {
-        setCategories(categories);
-        setIsInit(false);
-      });
 
     if (
-      (categories?.length !== 0 && categories !== undefined) ||
-      categories !== undefined
+      (expenseCategories?.length !== 0 && expenseCategories !== undefined) ||
+      expenseCategories !== undefined
     ) {
-      const colorCategory = categories?.find(
-        (category) => category.id === expenseCatId
+      const colorCategory = expenseCategories?.find(
+        (category) => category.id === props.category_id
       );
       if (colorCategory != undefined) {
         setColorCategory(colorCategory.color);
       }
     }
-  }, [categories, props]);
+  }, [expenseCategories, props]);
 
   function editHandler() {
-    setTitle("test");
+    console.log(expenseAmount, expenseTitle);
+    let expense = new Expense(
+      expenseTitle,
+      expenseCatId,
+      props.date,
+      expenseAmount,
+      props.type
+    );
+    setSelectedExpenseToEdit(expense)
   }
 
   function deleteHandler() {
@@ -81,9 +80,9 @@ function ExpenseItem(props: any) {
         </span>
 
         <div className="flex flex-row w-[10%] justify-center items-center">
-          {/* <button className="bg-color-dgreen m-1 w-[25px] h-[25px] flex flex-row justify-center items-center" onClick={editHandler}>
+          <button className="bg-color-dgreen m-1 w-[25px] h-[25px] flex flex-row justify-center items-center" onClick={editHandler}>
             <img src="./edit_green.svg" />
-          </button>*/}
+          </button>
 
           <button
             className="bg-color-dgreen m-1 w-[25px] h-[25px] flex flex-row justify-center items-center"

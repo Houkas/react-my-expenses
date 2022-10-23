@@ -7,14 +7,21 @@ import ExpensesSum from "../ExpensesSum/ExpensesSum";
 import { Expense } from "../../../types/Expense";
 
 import useStore from "../../store/store-zustand";
+import { fetchCategories } from "../../../services/expenseService";
+import { useAuth } from "../../Auth/Auth";
 
 function Expenses() {
+
+  const { user } = useAuth();
 
   const expensesStore = useStore((state) => state.expenses);
   const expensesFilteredStore = useStore((state) => state.expensesFiltered);
   const setExpensesSumStore = useStore((state) => state.setExpensesSum);
   const setExpensesFilteredStore = useStore((state) => state.setExpensesFiltered);
   const expensesSumStore = useStore((state) => state.expensesSum);
+
+  const expensesCategories= useStore((state) => state.expenseCategories);
+  const setExpensesCategories = useStore((state) => state.setExpenseCategories);
 
   const [selectedYear, setYear] = useState(new Date().getFullYear().toString());
   const [selectedMonth, setMonth] = useState(
@@ -44,6 +51,15 @@ function Expenses() {
 
   useEffect(() => {
     // init
+    if (
+      (expensesCategories?.length === 0 && isInit === true) ||
+      (expensesCategories === undefined && isInit === true)
+    ){
+      fetchCategories(user?.id).then((categories) => {
+        setExpensesCategories(categories);
+        setIsInit(false);
+      });
+    }
     if (expensesStore!.length > 0 && expensesSumStore === 0 && isInit === true) {
       let sum = 0;
       expensesStore!.forEach((element: Expense) => {
