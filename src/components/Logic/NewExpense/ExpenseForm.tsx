@@ -1,5 +1,9 @@
 import React, { SetStateAction, useEffect, useState } from "react";
-import { addExpense, fetchCategories } from "../../../services/expenseService";
+import {
+  addExpense,
+  fetchCategories,
+  updateExpense,
+} from "../../../services/expenseService";
 import { Expense } from "../../../types/Expense";
 import { ExpenseCategory } from "../../../types/ExpenseCategory";
 import { useAuth } from "../../Auth/Auth";
@@ -7,9 +11,14 @@ import useStore from "../../store/store-zustand";
 import "./ExpenseForm.css";
 
 function ExpenseForm(props: any) {
+  const addExpenseStore = useStore((state) => state.addExpense);
+  const selectedExpenseToEdit = useStore(
+    (state) => state.selectedExpenseToEdit
+  );
+  const expenses = useStore((state) => state.expenses);
+  const setExpenses = useStore((state) => state.setExpenses);
 
-  const addExpenseStore = useStore((state) => state.addExpense)
-  const selectedExpenseToEdit = useStore((state) => state.selectedExpenseToEdit)
+  const [isExpenseExists, setIsExpenseExisits] = useState(false);
 
   // Get current user and signOut function from context
   const user = useAuth()?.user;
@@ -25,7 +34,9 @@ function ExpenseForm(props: any) {
   );
 
   const [enteredTitle, setEnteredTitle] = useState("");
-  const [enteredCategoryId, setEnteredCategoryId] = useState<number | undefined>(undefined);
+  const [enteredCategoryId, setEnteredCategoryId] = useState<
+    number | undefined
+  >(undefined);
   const [enteredAmount, setEnteredAmount] = useState(0);
   const [enteredDate, setEnteredDate] = useState("");
   const [enteredType, setEnteredType] = useState("courante");
@@ -34,26 +45,29 @@ function ExpenseForm(props: any) {
     fetchCategories(user?.id).then((categoriesFromDb) => {
       if (categoriesFromDb!.length > 0) {
         setCategories(categoriesFromDb);
-        setEnteredCategoryId(categoriesFromDb![0].id);
+        if (!selectedExpenseToEdit || selectedExpenseToEdit === undefined) {
+          setEnteredCategoryId(categoriesFromDb![0].id);
+        }
       }
-    })
+    });
+
     if (selectedExpenseToEdit !== undefined) {
       setEnteredTitle(selectedExpenseToEdit.title);
       setEnteredCategoryId(selectedExpenseToEdit.category_id);
       setEnteredAmount(selectedExpenseToEdit.amount);
       setEnteredDate(selectedExpenseToEdit.date);
       setEnteredType(selectedExpenseToEdit.type);
+      setIsExpenseExisits(true);
     }
   }, [selectedExpenseToEdit]);
-
-
 
   const titleChangeHandler = (event: any) => {
     setEnteredTitle(event.target.value);
   };
   const categoryChangeHandler = (event: any) => {
-    const catFound = categories?.find(category =>
-      category.name === event.target.value
+    debugger;
+    const catFound = categories?.find(
+      (category) => category.id === parseInt(event.target.value)
     );
 
     setEnteredCategoryId(catFound?.id);
@@ -68,28 +82,59 @@ function ExpenseForm(props: any) {
     setEnteredType(event.target.value);
   };
 
+  function updateExpenseById(expenseEdited: Expense): Expense[] | undefined {
+    const expensesUpdated = expenses?.map((expense) => {
+      if (expense.id === expenseEdited?.id) {
+        expense = expenseEdited;
+      }
+      return expense;
+    });
+    return expensesUpdated;
+  }
+
   function submitHandler(event: any) {
     /* TO DO 
       gérer les enregistrements de montant de type float -> changement de la colonne en base ?
     */
     event.preventDefault();
+    if (props.isExpenseToEdit === true) {
+      debugger;
+      const expenseData = new Expense(
+        selectedExpenseToEdit!.id,
+        enteredTitle,
+        enteredCategoryId!,
+        new Date(enteredDate).toLocaleDateString("en-US"),
+        Number(enteredAmount),
+        enteredType
+      );
 
-    const expenseData = new Expense(
-      enteredTitle,
-      enteredCategoryId!,
-      new Date(enteredDate).toLocaleDateString("en-US"),
-      Number(enteredAmount),
-      enteredType
-    );
+      updateExpense(expenseData, user?.id);
+      const updatedExpenses = updateExpenseById(expenseData);
+      setExpenses(updatedExpenses);
 
-    addExpenseStore(expenseData);
+      setEnteredTitle("");
+      setEnteredAmount(0);
+      setEnteredDate("");
+      setEnteredType("");
+    } else {
+      const expenseData = new Expense(
+        null,
+        enteredTitle,
+        enteredCategoryId!,
+        new Date(enteredDate).toLocaleDateString("en-US"),
+        Number(enteredAmount),
+        enteredType
+      );
 
-    setEnteredTitle("");
-    setEnteredAmount(0);
-    setEnteredDate("");
-    setEnteredType("");
+      addExpenseStore(expenseData);
 
-    addExpense(expenseData, user?.id);
+      setEnteredTitle("");
+      setEnteredAmount(0);
+      setEnteredDate("");
+      setEnteredType("");
+
+      addExpense(expenseData, user?.id);
+    }
   }
 
   return (
@@ -111,11 +156,14 @@ function ExpenseForm(props: any) {
               <select
                 name="types"
                 id="type-select"
+                value={enteredCategoryId}
                 className="p-2 border-dgreen border bg-transparent color-dgreen font-sm"
                 onChange={categoryChangeHandler}
               >
                 {categories?.map((category) => (
-                  <option key={category.id}>{category.name}</option>
+                  <option key={category.id} value={category.id} id={category.name}>
+                    {category.name}
+                  </option>
                 ))}
               </select>
             </div>
@@ -127,6 +175,7 @@ function ExpenseForm(props: any) {
             <select
               name="types"
               id="type-select"
+              value={enteredType}
               className="p-2 border-dgreen border bg-transparent color-dgreen font-sm"
               onChange={typeChangeHandler}
               defaultValue={"courante"}
@@ -161,7 +210,7 @@ function ExpenseForm(props: any) {
           </div>
         </div>
         <div className="p-2">
-          {props.isExpenseToEdit === false &&
+          {props.isExpenseToEdit === false && (
             <button
               type="submit"
               className="color-dgreen font bg-color-green font-bold focus:ring-4 focus:ring-blue-300
@@ -170,8 +219,8 @@ function ExpenseForm(props: any) {
             >
               Ajouter une dépense
             </button>
-          }
-          {props.isExpenseToEdit === true &&
+          )}
+          {props.isExpenseToEdit === true && (
             <button
               type="submit"
               className="color-dgreen font bg-color-green font-bold focus:ring-4 focus:ring-blue-300
@@ -180,8 +229,7 @@ function ExpenseForm(props: any) {
             >
               Modifier la dépense
             </button>
-          }
-
+          )}
         </div>
       </div>
     </form>

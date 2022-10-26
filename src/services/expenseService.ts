@@ -22,6 +22,21 @@ export async function addExpense(expense: Expense, userId: string | undefined) {
   return data;
 }
 
+export async function updateExpense(expense: Expense | undefined,  userId: string | undefined) {
+  const { data } = await supabase
+    .from('expenses')
+    .update({
+      title: expense?.title,
+      amount: expense?.amount,
+      date: expense?.date,
+      category_id: expense?.category_id,
+      type: expense?.type
+    })
+    .eq('id', expense?.id)
+
+  return data;
+}
+
 export async function fetchExpenses(userId: string | undefined): Promise<Expense[] | undefined> {
   const { data: expenses, error } = await supabase
     .from("expenses")

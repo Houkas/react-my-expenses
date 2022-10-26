@@ -5,14 +5,15 @@ export class Expense{
     private _title: string;
     private _category_id: number;
     private _type: string;
-    id!: number;
+    id!: number | null;
 
-    constructor(title: string, category_id: number, date: string, amount: number, type: string) {
+    constructor(id: number | null, title: string, category_id: number, date: string, amount: number, type: string) {
         this._date = date;
         this._amount = amount;
         this._title = title;
         this._category_id = category_id;
         this._type = type;
+        this.id = id;
     }
 
     get date(): string {

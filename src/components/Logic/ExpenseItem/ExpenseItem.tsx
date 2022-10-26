@@ -41,8 +41,9 @@ function ExpenseItem(props: any) {
   }, [expenseCategories, props]);
 
   function editHandler() {
-    console.log(expenseAmount, expenseTitle);
+    
     let expense = new Expense(
+      props.id,
       expenseTitle,
       expenseCatId,
       props.date,
@@ -67,7 +68,7 @@ function ExpenseItem(props: any) {
           <ExpenseDate date={props.date} />
         </div>
 
-        <div className="whitespace-nowrap overflow-hidden text-ellipsis m-1 w-[40%]">
+        <div className="overflow-hidden text-ellipsis m-1 w-[35%]">
           <h2 className="color-dgreen font-medium" style={{ fontSize: "12px" }}>
             {expenseTitle}
           </h2>
@@ -79,13 +80,13 @@ function ExpenseItem(props: any) {
           {expenseAmount} €
         </span>
 
-        <div className="flex flex-row w-[10%] justify-center items-center">
-          <button className="bg-color-dgreen m-1 w-[25px] h-[25px] flex flex-row justify-center items-center" onClick={editHandler}>
+        <div className="flex flex-row w-[15%] justify-center items-center">
+          <button className="bg-color-dgreen m-1 min-w-[25px] h-[25px] flex flex-row justify-center items-center" onClick={editHandler}>
             <img src="./edit_green.svg" />
           </button>
 
           <button
-            className="bg-color-dgreen m-1 w-[25px] h-[25px] flex flex-row justify-center items-center"
+            className="bg-color-dgreen m-1 min-w-[25px] h-[25px] flex flex-row justify-center items-center"
             onClick={deleteHandler}
           >
             <img src="./delete_red.svg" />

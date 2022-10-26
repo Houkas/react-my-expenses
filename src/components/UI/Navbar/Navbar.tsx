@@ -5,11 +5,15 @@ import ExpenseForm from "../../Logic/NewExpense/ExpenseForm";
 import useStore from "../../store/store-zustand";
 
 function Navbar() {
+  const setExpenseToEdit = useStore((state) => state.setExpenseToEdit)
   const location = useLocation();
   const selectedExpenseToEdit = useStore((state) => state.selectedExpenseToEdit);
   let [isFormVisible, setIsFormVisible] = useState(false);
   function displayExpenseForm() {
     setIsFormVisible(!isFormVisible);
+    if(isFormVisible === true){
+      setExpenseToEdit(undefined)
+    }
   }
 
   function hideExpenseForm() {
