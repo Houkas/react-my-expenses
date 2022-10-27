@@ -65,7 +65,6 @@ function ExpenseForm(props: any) {
     setEnteredTitle(event.target.value);
   };
   const categoryChangeHandler = (event: any) => {
-    debugger;
     const catFound = categories?.find(
       (category) => category.id === parseInt(event.target.value)
     );
@@ -98,7 +97,6 @@ function ExpenseForm(props: any) {
     */
     event.preventDefault();
     if (props.isExpenseToEdit === true) {
-      debugger;
       const expenseData = new Expense(
         selectedExpenseToEdit!.id,
         enteredTitle,

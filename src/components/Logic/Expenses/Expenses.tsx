@@ -100,7 +100,6 @@ function Expenses() {
     if (expensesFilteredStore !== undefined && isInit === false && typeFilter === "month") {
       (async () => {
         let fExpenses;
-        debugger;
         fExpenses = expensesStore!.filter((expense: Expense) => {
           const expenseMonth = (String(new Date(expense.date).getMonth() + 1).padStart(2, "0"));
           const expenseYear = new Date().getFullYear().toString();

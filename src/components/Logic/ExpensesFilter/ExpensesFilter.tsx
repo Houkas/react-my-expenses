@@ -18,7 +18,7 @@ function ExpensesFilter(props: any) {
     [currentYear, currentMonth].join("-")
   );
   
-  const [filterSelected, setFilterSelected] = useState("year");
+  const [filterSelected, setFilterSelected] = useState("month");
   const [isInit, setIsInit] = useState(true);
 
   useEffect(() => {

@@ -8,6 +8,17 @@ import "./ExpensesList.css";
 
 function ExpensesList() {
   const expensesStore = useStore((state) => state.expenses);
+  const expensesFilteredStore = useStore((state) => state.expensesFiltered);
+
+  const [expensesToDisplay, setExpensesToDisplay] = useState<Expense[] | undefined>();
+
+  useEffect(() => {
+    if(expensesFilteredStore !== undefined){
+      setExpensesToDisplay(expensesFilteredStore);
+    } else {
+      setExpensesToDisplay(expensesStore);
+    }
+  }, [expensesFilteredStore]);
 
   if (expensesStore === undefined || expensesStore?.length === 0) {
     return (
@@ -16,7 +27,7 @@ function ExpensesList() {
   } else {
     return (
       <ul className="expenses-list">
-        {expensesStore?.map((expense: Expense) => (
+        {expensesToDisplay?.map((expense: Expense) => (
           <ExpenseItem
             key={expense.id}
             category_id={expense.category_id}
