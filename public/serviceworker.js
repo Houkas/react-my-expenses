@@ -1,4 +1,5 @@
 const PREFIX = "V1";
+const BASE = location.protocol + '//' + location.host;
 
 const appShellFiles = [
   `${BASE}offline.html`,
@@ -12,8 +13,6 @@ const appShellFiles = [
   `${BASE}/icons/android/android-launchericon-192-192.png`,
   `${BASE}/icons/android/android-launchericon-512-512.png`,
 ];
-
-const BASE = location.protocol + '//' + location.host
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();
