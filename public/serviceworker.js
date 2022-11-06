@@ -49,7 +49,6 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (e) => {
   console.log(`${PREFIX} Fetching : ${e.request.url}, Mode : ${e.request.mode}`);
-  debugger;
   if (e.request.mode === "navigate") {
     e.respondWith(
       (async () => {
