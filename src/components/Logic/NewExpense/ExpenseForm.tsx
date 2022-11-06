@@ -2,6 +2,7 @@ import React, { SetStateAction, useEffect, useState } from "react";
 import {
   addExpense,
   fetchCategories,
+  fetchExpenses,
   updateExpense,
 } from "../../../services/expenseService";
 import { Expense } from "../../../types/Expense";
@@ -125,7 +126,7 @@ function ExpenseForm(props: any) {
         enteredType
       );
 
-      addExpenseStore(expenseData);
+      //addExpenseStore(expenseData);
 
       setEnteredTitle("");
       setEnteredAmount(0);
@@ -133,6 +134,9 @@ function ExpenseForm(props: any) {
       setEnteredType("");
 
       addExpense(expenseData, user?.id);
+      fetchExpenses(user?.id).then((expenses) =>{
+        setExpenses(expenses);
+      });
       setIsExpensesListChanged(true);
     }
   }
@@ -178,7 +182,6 @@ function ExpenseForm(props: any) {
               value={enteredType}
               className="p-2 border-dgreen border bg-transparent color-dgreen font-sm"
               onChange={typeChangeHandler}
-              defaultValue={"courante"}
             >
               <option value="courante">Courante</option>
               <option value="fixe">Fixe</option>

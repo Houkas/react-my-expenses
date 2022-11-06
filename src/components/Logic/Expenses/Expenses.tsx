@@ -16,9 +16,7 @@ function Expenses() {
   const expensesStore = useStore((state) => state.expenses);
   const expensesFilteredStore = useStore((state) => state.expensesFiltered);
   const setExpensesSumStore = useStore((state) => state.setExpensesSum);
-  const setExpensesFilteredStore = useStore(
-    (state) => state.setExpensesFiltered
-  );
+  const setExpensesFilteredStore = useStore((state) => state.setExpensesFiltered);
   const expensesSumStore = useStore((state) => state.expensesSum);
   const isExpensesListChanged = useStore((state) => state.isExpensesListChanged);
   const setIsExpensesListChanged = useStore((state) => state.setIsExpensesListChanged);
