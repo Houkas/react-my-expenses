@@ -23,7 +23,8 @@ function ExpensesFilter(props: any) {
 
   useEffect(() => {
     if(isInit === true){
-      selectYearHandler(null, isInit);
+      //selectYearHandler(null, isInit);
+      //selectMonthHandler(null, isInit);
       setIsInit(false);
     }
   }, [isInit])
