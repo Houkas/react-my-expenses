@@ -61,7 +61,7 @@ self.addEventListener("fetch", (e) => {
           return await fetch(e.request);
         } catch (e) {
           const cache = await caches.open(PREFIX);
-          return await cache.match("/offline.html");
+          return await cache.match(`${BASE}/offline.html`);
         }
       })()
     );
