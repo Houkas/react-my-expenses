@@ -1,16 +1,16 @@
 const PREFIX = "V1";
 
 const appShellFiles = [
-  "offline.html",
-  "/src/app.tsx",
-  "/src/index.scss",
-  '/logo.svg',
-  "/icons/android/android-launchericon-48-48.png",
-  "/icons/android/android-launchericon-72-72.png",
-  "/icons/android/android-launchericon-96-96.png",
-  "/icons/android/android-launchericon-144-144.png",
-  "/icons/android/android-launchericon-192-192.png",
-  "/icons/android/android-launchericon-512-512.png",
+  `${BASE}offline.html`,
+  `${BASE}/src/app.tsx`,
+  `${BASE}/src/index.scss`,
+  `${BASE}/logo.svg`,
+  `${BASE}/icons/android/android-launchericon-48-48.png`,
+  `${BASE}/icons/android/android-launchericon-72-72.png`,
+  `${BASE}/icons/android/android-launchericon-96-96.png`,
+  `${BASE}/icons/android/android-launchericon-144-144.png`,
+  `${BASE}/icons/android/android-launchericon-192-192.png`,
+  `${BASE}/icons/android/android-launchericon-512-512.png`,
 ];
 
 const BASE = location.protocol + '//' + location.host
