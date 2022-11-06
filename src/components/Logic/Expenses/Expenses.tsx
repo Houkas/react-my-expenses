@@ -20,6 +20,8 @@ function Expenses() {
     (state) => state.setExpensesFiltered
   );
   const expensesSumStore = useStore((state) => state.expensesSum);
+  const isExpensesListChanged = useStore((state) => state.isExpensesListChanged);
+  const setIsExpensesListChanged = useStore((state) => state.setIsExpensesListChanged);
 
   const expensesCategories = useStore((state) => state.expenseCategories);
   const setExpensesCategories = useStore((state) => state.setExpenseCategories);
@@ -135,7 +137,8 @@ function Expenses() {
     // init
     if (
       (expensesCategories?.length === 0 && isInit === true) ||
-      (expensesCategories === undefined && isInit === true)
+      (expensesCategories === undefined && isInit === true) ||
+      (isExpensesListChanged === true)
     ) {
       fetchCategories(user?.id).then((categories) => {
         setExpensesCategories(categories);
@@ -151,13 +154,11 @@ function Expenses() {
       expensesStore!.forEach((element: Expense) => {
         sum = sum + element.amount;
       });
-
-      //setExpensesFilteredStore(expensesStore);
-      //setExpensesSumStore(sum);
-
-      /* affichage par défaut : par mois */
-      filterExpensesByMonth();
+      
+      setExpensesFilteredStore(expensesStore);
+      setExpensesSumStore(sum);
       setIsInit(false);
+      setIsExpensesListChanged(false);
     }
     // update
     //by year
@@ -192,7 +193,7 @@ function Expenses() {
         filterExpensesByDay();
       })();
     }
-  }, [selectedYear, selectedMonth, selectedDay, typeFilter, expensesStore]);
+  }, [selectedYear, selectedMonth, selectedDay, typeFilter, expensesStore, isExpensesListChanged]);
 
   return (
     <div>

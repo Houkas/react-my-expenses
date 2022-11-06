@@ -8,6 +8,7 @@ interface ExpenseState {
     expenses: Expense[] | undefined,
     expensesSum: number,
     expensesFiltered: Expense[] | undefined,
+    isExpensesListChanged: boolean,
 
     yearFilter: string | null,
     monthFilter: string | null,
@@ -27,6 +28,7 @@ interface ExpenseState {
     addExpense: (expense: Expense) => void,
     removeExpense: (id: number) => void,
     setExpensesSum: (sum: number) => void,
+    setIsExpensesListChanged:(value: boolean) => void
 }
 
 const useStore = create<ExpenseState>((set) => ({
@@ -34,6 +36,7 @@ const useStore = create<ExpenseState>((set) => ({
     expenses: undefined,
     expensesSum: 0,
     expensesFiltered: undefined,
+    isExpensesListChanged: false,
 
     yearFilter: null,
     monthFilter: null,
@@ -77,6 +80,9 @@ const useStore = create<ExpenseState>((set) => ({
     ),
     setExpensesSum: (sum: number) => set(
         () => ({ expensesSum: sum })
+    ),
+    setIsExpensesListChanged: (value: boolean) => set(
+        () => ({ isExpensesListChanged: value })
     ),
 
 }));

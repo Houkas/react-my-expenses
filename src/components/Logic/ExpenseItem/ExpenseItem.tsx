@@ -15,6 +15,7 @@ function ExpenseItem(props: any) {
   const removeExpensesStore = useStore((state) => state.removeExpense);
   const setSelectedExpenseToEdit = useStore((state) => state.setExpenseToEdit);
   const expenseCategories = useStore((state) => state.expenseCategories);
+  const setIsExpensesListChanged = useStore((state) => state.setIsExpensesListChanged);
 
   const [expenseCatId, setExpenseCatId] = useState(0);
   const [expenseTitle, setTitle] = useState("");
@@ -56,6 +57,7 @@ function ExpenseItem(props: any) {
   function deleteHandler() {
     deleteExpense(props.id);
     removeExpensesStore(props.id);
+    setIsExpensesListChanged(true);
   }
 
   return (

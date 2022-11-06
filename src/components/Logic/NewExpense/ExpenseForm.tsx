@@ -17,6 +17,7 @@ function ExpenseForm(props: any) {
   );
   const expenses = useStore((state) => state.expenses);
   const setExpenses = useStore((state) => state.setExpenses);
+  const setIsExpensesListChanged = useStore((state) => state.setIsExpensesListChanged);
 
   const [isExpenseExists, setIsExpenseExisits] = useState(false);
 
@@ -132,6 +133,7 @@ function ExpenseForm(props: any) {
       setEnteredType("");
 
       addExpense(expenseData, user?.id);
+      setIsExpensesListChanged(true);
     }
   }
 
