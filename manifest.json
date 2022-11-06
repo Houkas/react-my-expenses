@@ -2,7 +2,7 @@
     "$schema": "https://json.schemastore.org/web-manifest-combined.json",
     "name": "react-my-expenses",
     "short_name": "react-my-expenses",
-    "start_url": ".",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#1C221C",
     "description": "Mon application de suivi de dépenses",
