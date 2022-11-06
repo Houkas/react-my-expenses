@@ -2,7 +2,7 @@ const PREFIX = "V1";
 const BASE = location.protocol + '//' + location.host;
 
 const appShellFiles = [
-  `${BASE}offline.html`,
+  `${BASE}/offline.html`,
   `${BASE}/src/app.tsx`,
   `${BASE}/src/index.scss`,
   `${BASE}/logo.svg`,
@@ -13,6 +13,7 @@ const appShellFiles = [
   `${BASE}/icons/android/android-launchericon-192-192.png`,
   `${BASE}/icons/android/android-launchericon-512-512.png`,
 ];
+debugger;
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();
