@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="static/logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Expenses</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
+    <style type="text/css">
+        .flex{
+            display: flex;
+        }
+        .justify-center{
+            justify-content: center;
+        }
+        .flex-col{
+            flex-direction: column;
+        }
+        .h-screen{
+            height: 100vh;
+        }
+        .mx-5{
+            margin-left: 1.25rem;
+            margin-right: 1.25rem;
+        }
+        .max-w-576{
+            max-width: 576px;
+        }
+        .text-center{
+            text-align: center;
+        }
+        .mx-auto{
+            margin: 0 auto;
+        }
+        .my-4{
+            margin-top:1rem;
+            margin-bottom: 1rem;
+        }
+        h1{
+            font-family: 'Space Mono', monospace;
+            color:#E4E8E3;
+        }
+        html,body {
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            --custom-bg-color: #1C221C;
+            --custom-panel-color: #222;
+            --custom-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.8);
+            --custom-color: #E4E8E3;
+            --custom-color-brand: #24b47e;
+            --custom-color-secondary: #666;
+            --custom-border: 1px solid #333;
+            --custom-border-radius: 5px;
+            --custom-spacing: 5px;
+
+            padding: 0;
+            margin: 0;
+            background-color: var(--custom-bg-color);
+            
+        }
+    </style>
+  </head>
+  <body>
+    <div class="flex justify-center">
+        <div class=" flex flex-col justify-center h-screen mx-5 max-w-576">
+          <!--<img src="/logo.svg" class="mx-auto my-4"></img>-->
+
+          <br />
+
+          <h1 class="text-center">
+            Vous n'avez pas de connexion à internet.<br> Réessayez plus tard.
+          </h1>
+        </div>
+      </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
