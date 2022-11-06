@@ -20,14 +20,14 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
       const cache = await caches.open(PREFIX);
-      //console.log("[Service Worker] Caching all: app shell and content");
+      console.log("[Service Worker] Caching all: app shell and content");
       await Promise.all([...appShellFiles, '/offline.html'].map((path) => {
           return cache.add(new Request(path))
       }))
       //await cache.addAll(appShellFiles);
     })()
   );
-  //console.log(`${PREFIX} Install`);
+  console.log(`${PREFIX} Install`);
 });
 
 self.addEventListener("activate", (event) => {
@@ -44,12 +44,12 @@ self.addEventListener("activate", (event) => {
       );
     })()
   );
-  //console.log(`${PREFIX} Active`);
+  console.log(`${PREFIX} Active`);
 });
 
 self.addEventListener("fetch", (e) => {
-  //console.log(`${PREFIX} Fetching : ${e.request.url}, Mode : ${e.request.mode}`);
-
+  console.log(`${PREFIX} Fetching : ${e.request.url}, Mode : ${e.request.mode}`);
+  debugger;
   if (e.request.mode === "navigate") {
     e.respondWith(
       (async () => {
