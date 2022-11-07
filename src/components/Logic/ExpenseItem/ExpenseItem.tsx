@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import {
   deleteExpense,
-  fetchCategories,
 } from "../../../services/expenseService";
 import { Expense } from "../../../types/Expense";
-import { ExpenseCategory } from "../../../types/ExpenseCategory";
-import { useAuth } from "../../Auth/Auth";
 import useStore from "../../store/store-zustand";
 import ExpenseDate from "../ExpenseDate/ExpenseDate";
 import "./ExpenseItem.css";
+import useStoreNotif from '../../store/store-notification';
 
 function ExpenseItem(props: any) {
 
@@ -16,6 +14,7 @@ function ExpenseItem(props: any) {
   const setSelectedExpenseToEdit = useStore((state) => state.setExpenseToEdit);
   const expenseCategories = useStore((state) => state.expenseCategories);
   const setIsExpensesListChanged = useStore((state) => state.setIsExpensesListChanged);
+  const setIsNotificationDisplayed = useStoreNotif((state) => state.setIsDisplayed)
 
   const [expenseCatId, setExpenseCatId] = useState(0);
   const [expenseTitle, setTitle] = useState("");
@@ -58,6 +57,7 @@ function ExpenseItem(props: any) {
     deleteExpense(props.id);
     removeExpensesStore(props.id);
     setIsExpensesListChanged(true);
+    setIsNotificationDisplayed(true);
   }
 
   return (

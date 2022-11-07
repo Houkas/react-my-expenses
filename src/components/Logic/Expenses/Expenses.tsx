@@ -1,7 +1,7 @@
 import "./Expenses.css";
 import Card from "../../UI/Card/Card";
 import ExpensesFilter from "../ExpensesFilter/ExpensesFilter";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ExpensesList from "../ExpensesList/ExpensesList";
 import ExpensesSum from "../ExpensesSum/ExpensesSum";
 import { Expense } from "../../../types/Expense";
@@ -9,6 +9,7 @@ import { Expense } from "../../../types/Expense";
 import useStore from "../../store/store-zustand";
 import { fetchCategories } from "../../../services/expenseService";
 import { useAuth } from "../../Auth/Auth";
+import Notification from "../../UI/Notification/Notification";
 
 function Expenses() {
   const { user } = useAuth();
