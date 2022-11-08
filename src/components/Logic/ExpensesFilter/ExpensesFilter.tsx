@@ -73,7 +73,7 @@ function ExpensesFilter(props: any) {
 
   return (
     <div className="my-2">
-      <div className="flex flex-row w-full items-center justify-end">
+      <div className="flex flex-row w-full items-center justify-start">
         <label className="color-lgrey mr-2">Filtrer par</label>
         <select
           value={filterSelected}

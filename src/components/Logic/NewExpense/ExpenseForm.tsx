@@ -133,9 +133,10 @@ function ExpenseForm(props: any) {
       setEnteredDate("");
       setEnteredType("");
 
-      addExpense(expenseData, user?.id);
-      fetchExpenses(user?.id).then((expenses) =>{
-        setExpenses(expenses);
+      addExpense(expenseData, user?.id).then(() => {
+        fetchExpenses(user?.id).then((expenses) =>{
+          setExpenses(expenses);
+        });
       });
       setIsExpensesListChanged(true);
     }
