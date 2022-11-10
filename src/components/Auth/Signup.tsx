@@ -1,8 +1,12 @@
 import { RefObject, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./Auth";
+import useStoreNotif from '../store/store-notification'
 
 export function Signup() {
+
+  const setIsDisplayed = useStoreNotif((state) => state.setIsDisplayed);
+
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [isPasswordConfirmVisible, setPasswordConfirmVisible] = useState(false);
 
@@ -35,6 +39,7 @@ export function Signup() {
     } else {
       // Redirect user to Dashboard
       navigate("/");
+      setIsDisplayed(true);
     }
   }
 

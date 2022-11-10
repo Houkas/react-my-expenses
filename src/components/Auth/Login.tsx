@@ -1,8 +1,13 @@
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./Auth";
+import Notification from "../UI/Notification/Notification";
+import useStoreNotif from "../store/store-notification";
 
 export function Login() {
+
+  const isDisplayed = useStoreNotif((state) => state.isDisplayed);
+
   const emailRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const passwordRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const [isPasswordVisible, setPasswordVisible] = useState(false);
@@ -31,6 +36,7 @@ export function Login() {
 
   return (
     <>
+      {isDisplayed === true && <Notification type={'success'} message={'Votre compte a été créé avec succès, un email de confirmation a été envoyé.'}></Notification>}
       <div className="flex justify-center">
         <div className=" flex flex-col justify-center h-screen mx-5 max-w-[576px]">
           <img src={"./logo.svg"} className="mx-auto my-4"></img>

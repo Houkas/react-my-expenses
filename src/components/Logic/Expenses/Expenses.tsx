@@ -17,10 +17,16 @@ function Expenses() {
   const expensesStore = useStore((state) => state.expenses);
   const expensesFilteredStore = useStore((state) => state.expensesFiltered);
   const setExpensesSumStore = useStore((state) => state.setExpensesSum);
-  const setExpensesFilteredStore = useStore((state) => state.setExpensesFiltered);
+  const setExpensesFilteredStore = useStore(
+    (state) => state.setExpensesFiltered
+  );
   const expensesSumStore = useStore((state) => state.expensesSum);
-  const isExpensesListChanged = useStore((state) => state.isExpensesListChanged);
-  const setIsExpensesListChanged = useStore((state) => state.setIsExpensesListChanged);
+  const isExpensesListChanged = useStore(
+    (state) => state.isExpensesListChanged
+  );
+  const setIsExpensesListChanged = useStore(
+    (state) => state.setIsExpensesListChanged
+  );
 
   const expensesCategories = useStore((state) => state.expenseCategories);
   const setExpensesCategories = useStore((state) => state.setExpenseCategories);
@@ -137,7 +143,7 @@ function Expenses() {
     if (
       (expensesCategories?.length === 0 && isInit === true) ||
       (expensesCategories === undefined && isInit === true) ||
-      (isExpensesListChanged === true)
+      isExpensesListChanged === true
     ) {
       fetchCategories(user?.id).then((categories) => {
         setExpensesCategories(categories);
@@ -153,7 +159,7 @@ function Expenses() {
       expensesStore!.forEach((element: Expense) => {
         sum = sum + element.amount;
       });
-      
+
       setExpensesFilteredStore(expensesStore);
       setExpensesSumStore(sum);
       setIsInit(false);
@@ -192,7 +198,14 @@ function Expenses() {
         filterExpensesByDay();
       })();
     }
-  }, [selectedYear, selectedMonth, selectedDay, typeFilter, expensesStore, isExpensesListChanged]);
+  }, [
+    selectedYear,
+    selectedMonth,
+    selectedDay,
+    typeFilter,
+    expensesStore,
+    isExpensesListChanged,
+  ]);
 
   return (
     <div>
@@ -203,8 +216,14 @@ function Expenses() {
         onDaySelected={dayFilterHandler}
       />
       <Card className="expenses">
-        <ExpensesList />
+        {expensesFilteredStore && <ExpensesList />}
+        {expensesFilteredStore === undefined && (
+          <p className="text-[#1C221C] text-center">
+            Vous n'avez pas de dépenses, ajoutez-en !
+          </p>
+        )}
       </Card>
+
       <ExpensesSum sum={expensesSumStore} />
     </div>
   );

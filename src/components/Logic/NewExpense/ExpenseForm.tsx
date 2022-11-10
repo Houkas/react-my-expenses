@@ -30,7 +30,7 @@ function ExpenseForm(props: any) {
 
   const currentYear = new Date().getFullYear();
   const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
-  const currentDay = String(new Date().getDay() + 1).padStart(2, "0");
+  const currentDay = String(new Date().getDate());
   const [daySelected, setDaySelected] = useState(
     [currentYear, currentMonth, currentDay].join("-")
   );
@@ -40,7 +40,7 @@ function ExpenseForm(props: any) {
     number | undefined
   >(undefined);
   const [enteredAmount, setEnteredAmount] = useState(0);
-  const [enteredDate, setEnteredDate] = useState("");
+  const [enteredDate, setEnteredDate] = useState(daySelected);
   const [enteredType, setEnteredType] = useState("courante");
 
   useEffect(() => {
@@ -77,6 +77,7 @@ function ExpenseForm(props: any) {
     setEnteredAmount(event.target.value);
   };
   const dateChangeHandler = (event: any) => {
+    debugger;
     setEnteredDate(event.target.value);
   };
   const typeChangeHandler = (event: any) => {
