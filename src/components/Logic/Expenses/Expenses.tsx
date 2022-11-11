@@ -228,7 +228,7 @@ function Expenses() {
 
   return (
     <div>
-       {notification.isDisplayed === true && <Notification type={notification.type} message={notification.message}></Notification>}
+      {notification.isDisplayed === true && <Notification type={notification.type} message={notification.message}></Notification>}
       <ExpensesFilter
         selected={selectedYear}
         onYearSelected={yearFilterHandler}
