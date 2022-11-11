@@ -8,10 +8,12 @@ import {
 import { Expense } from "../../../types/Expense";
 import { ExpenseCategory } from "../../../types/ExpenseCategory";
 import { useAuth } from "../../Auth/Auth";
+import useStoreNotif from "../../store/store-notification";
 import useStore from "../../store/store-zustand";
 import "./ExpenseForm.css";
 
 function ExpenseForm(props: any) {
+  const setNotification = useStoreNotif((state) => state.setNotification);
   const addExpenseStore = useStore((state) => state.addExpense);
   const selectedExpenseToEdit = useStore(
     (state) => state.selectedExpenseToEdit
@@ -101,9 +103,6 @@ function ExpenseForm(props: any) {
   }
 
   function submitHandler(event: any) {
-    /* TO DO 
-      gérer les enregistrements de montant de type float -> changement de la colonne en base ?
-    */
     event.preventDefault();
     if (props.isExpenseToEdit === true) {
       const expenseData = new Expense(
@@ -144,6 +143,7 @@ function ExpenseForm(props: any) {
         fetchExpenses(user?.id).then((expenses) => {
           setExpenses(expenses);
         });
+        setNotification(true, 'success', "Dépense : '" + expenseData.title + "' ajoutée avec succès.");
       });
       setIsExpensesListChanged(true);
     }

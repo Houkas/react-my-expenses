@@ -14,7 +14,7 @@ function ExpenseItem(props: any) {
   const setSelectedExpenseToEdit = useStore((state) => state.setExpenseToEdit);
   const expenseCategories = useStore((state) => state.expenseCategories);
   const setIsExpensesListChanged = useStore((state) => state.setIsExpensesListChanged);
-  const setNotification = useStoreNotif((state) => state.setNotification)
+  const setNotification = useStoreNotif((state) => state.setNotification);
 
   const [expenseCatId, setExpenseCatId] = useState(0);
   const [expenseTitle, setTitle] = useState("");
