@@ -1,21 +1,28 @@
 import create from "zustand"
 
 interface Notification {
-    isDisplayed: boolean,
-    setIsDisplayed: (value: boolean) => void,
-    isSignUpSuccessDisplayed: boolean,
-    setIsSignUpSuccessDisplayed: (value: boolean) => void,
+    notification: {
+        isDisplayed: boolean,
+        type: string,
+        message: string
+    },
+    setNotification: (isDisplayed: boolean, type: string, message: string) => void,
+
 }
 
 const useStoreNotif = create<Notification>((set) => ({
-    isDisplayed: false,
-    setIsDisplayed: (value: boolean) => set(
-        () => ({ isDisplayed: value })
+    notification: {
+        isDisplayed: false,
+        type: '',
+        message: ''
+    },
+    setNotification: (isDisplayed: boolean, type: string, message: string) => set(
+        () => ({ notification: {
+            isDisplayed : isDisplayed,
+            type: type,
+             message : message
+        } })
     ),
-    isSignUpSuccessDisplayed: false,
-    setIsSignUpSuccessDisplayed: (value: boolean) => set(
-        () => ({ isSignUpSuccessDisplayed: value })
-    )
 }));
 
 

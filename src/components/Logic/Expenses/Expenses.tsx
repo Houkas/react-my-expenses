@@ -10,9 +10,12 @@ import useStore from "../../store/store-zustand";
 import { fetchCategories } from "../../../services/expenseService";
 import { useAuth } from "../../Auth/Auth";
 import Notification from "../../UI/Notification/Notification";
+import useStoreNotif from '../../store/store-notification';
 
 function Expenses() {
+
   const { user } = useAuth();
+  const notification = useStoreNotif((state) => state.notification);
 
   const expensesStore = useStore((state) => state.expenses);
   const expensesFilteredStore = useStore((state) => state.expensesFiltered);
@@ -166,6 +169,22 @@ function Expenses() {
       setIsExpensesListChanged(false);
     }
     // update
+    if (
+      expensesStore!.length === 0 &&
+      expensesSumStore === 0 &&
+      isInit === false &&
+      isExpensesListChanged === true
+    ) {
+      let sum = 0;
+      expensesStore!.forEach((element: Expense) => {
+        sum = sum + element.amount;
+      });
+
+      setExpensesFilteredStore(expensesStore);
+      setExpensesSumStore(sum);
+      setIsInit(false);
+      setIsExpensesListChanged(false);
+    }
     //by year
     if (
       expensesFilteredStore !== undefined &&
@@ -209,6 +228,7 @@ function Expenses() {
 
   return (
     <div>
+       {notification.isDisplayed === true && <Notification type={notification.type} message={notification.message}></Notification>}
       <ExpensesFilter
         selected={selectedYear}
         onYearSelected={yearFilterHandler}

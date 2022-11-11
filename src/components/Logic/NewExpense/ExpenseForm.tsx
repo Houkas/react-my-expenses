@@ -18,7 +18,9 @@ function ExpenseForm(props: any) {
   );
   const expenses = useStore((state) => state.expenses);
   const setExpenses = useStore((state) => state.setExpenses);
-  const setIsExpensesListChanged = useStore((state) => state.setIsExpensesListChanged);
+  const setIsExpensesListChanged = useStore(
+    (state) => state.setIsExpensesListChanged
+  );
 
   const [isExpenseExists, setIsExpenseExisits] = useState(false);
 
@@ -54,10 +56,15 @@ function ExpenseForm(props: any) {
     });
 
     if (selectedExpenseToEdit !== undefined) {
+      const selectedExpenseToEditYear = new Date(selectedExpenseToEdit.date).getFullYear();
+      const selectedExpenseToEditMonth = String(new Date(selectedExpenseToEdit.date).getMonth() + 1).padStart(2, "0");
+      const selectedExpenseToEditDay = String(new Date(selectedExpenseToEdit.date).getDate());
+      const editExpenseDate = [selectedExpenseToEditYear, selectedExpenseToEditMonth, selectedExpenseToEditDay].join("-")
+
       setEnteredTitle(selectedExpenseToEdit.title);
       setEnteredCategoryId(selectedExpenseToEdit.category_id);
       setEnteredAmount(selectedExpenseToEdit.amount);
-      setEnteredDate(selectedExpenseToEdit.date);
+      setEnteredDate(editExpenseDate);
       setEnteredType(selectedExpenseToEdit.type);
       setIsExpenseExisits(true);
     }
@@ -77,7 +84,6 @@ function ExpenseForm(props: any) {
     setEnteredAmount(event.target.value);
   };
   const dateChangeHandler = (event: any) => {
-    debugger;
     setEnteredDate(event.target.value);
   };
   const typeChangeHandler = (event: any) => {
@@ -112,10 +118,10 @@ function ExpenseForm(props: any) {
       updateExpense(expenseData, user?.id);
       const updatedExpenses = updateExpenseById(expenseData);
       setExpenses(updatedExpenses);
-
+      debugger;
       setEnteredTitle("");
       setEnteredAmount(0);
-      setEnteredDate("");
+      setEnteredDate(daySelected);
       setEnteredType("");
     } else {
       const expenseData = new Expense(
@@ -131,11 +137,11 @@ function ExpenseForm(props: any) {
 
       setEnteredTitle("");
       setEnteredAmount(0);
-      setEnteredDate("");
+      setEnteredDate(daySelected);
       setEnteredType("");
 
       addExpense(expenseData, user?.id).then(() => {
-        fetchExpenses(user?.id).then((expenses) =>{
+        fetchExpenses(user?.id).then((expenses) => {
           setExpenses(expenses);
         });
       });
@@ -167,7 +173,11 @@ function ExpenseForm(props: any) {
                 onChange={categoryChangeHandler}
               >
                 {categories?.map((category) => (
-                  <option key={category.id} value={category.id} id={category.name}>
+                  <option
+                    key={category.id}
+                    value={category.id}
+                    id={category.name}
+                  >
                     {category.name}
                   </option>
                 ))}

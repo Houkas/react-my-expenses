@@ -22,7 +22,7 @@ function ExpensesList() {
 
   if (expensesStore === undefined || expensesStore?.length === 0) {
     return (
-      <h2 className="expenses-list__fallback">Aucune dépenses trouvées</h2>
+      <h2 className="text-center text-[#1C221C]">Aucune dépenses trouvées</h2>
     );
   } else {
     return (

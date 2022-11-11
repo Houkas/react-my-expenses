@@ -14,7 +14,7 @@ function ExpenseItem(props: any) {
   const setSelectedExpenseToEdit = useStore((state) => state.setExpenseToEdit);
   const expenseCategories = useStore((state) => state.expenseCategories);
   const setIsExpensesListChanged = useStore((state) => state.setIsExpensesListChanged);
-  const setIsNotificationDisplayed = useStoreNotif((state) => state.setIsDisplayed)
+  const setNotification = useStoreNotif((state) => state.setNotification)
 
   const [expenseCatId, setExpenseCatId] = useState(0);
   const [expenseTitle, setTitle] = useState("");
@@ -57,7 +57,7 @@ function ExpenseItem(props: any) {
     deleteExpense(props.id);
     removeExpensesStore(props.id);
     setIsExpensesListChanged(true);
-    setIsNotificationDisplayed(true);
+    setNotification(true, 'error', "Dépense : '" + expenseTitle + "' supprimée avec succès.");
   }
 
   return (

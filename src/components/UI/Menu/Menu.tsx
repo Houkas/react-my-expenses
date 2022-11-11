@@ -20,7 +20,7 @@ function Menu(props:any){
         <div className={"menu-fadeIn absolute min-h-screen bg-color-dgreen min-w-full py-20 px-5 top-0 z-[1]"}>
             <button onClick={() => handleSignOut()} className="flex flex-row items-center">
                 <img src={'./sign_out.svg'} />
-                Sign out
+                Déconnexion
             </button>
             <NewCategory></NewCategory>
         </div>

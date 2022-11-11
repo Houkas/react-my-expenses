@@ -3,21 +3,21 @@ import useStoreNotif from "../../store/store-notification";
 import "./Notification.scss";
 
 export default function Notification(props: any) {
-  const setIsDisplayed = useStoreNotif((state) => state.setIsDisplayed);
-  const isDisplayed = useStoreNotif((state) => state.isDisplayed);
+  const setNotification = useStoreNotif((state) => state.setNotification);
+  const notification = useStoreNotif((state) => state.notification);
 
   const [isMounted, setIsMounted] = useState(false);
   const [isInit, setIsInit] = useState(true);
 
   useEffect(() => {
     if (isInit === true) {
-      setIsMounted(isDisplayed);
+      setIsMounted(notification.isDisplayed);
       setIsInit(false);
       // Notification killed after 10s
       setInterval(killNotification, 10000);
     } else {
       if (isMounted === false) {
-        setIsDisplayed(false);
+        setNotification(false, '', '');
       }
     }
   }, [isMounted]);

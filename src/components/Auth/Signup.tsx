@@ -5,7 +5,7 @@ import useStoreNotif from '../store/store-notification'
 
 export function Signup() {
 
-  const setIsDisplayed = useStoreNotif((state) => state.setIsDisplayed);
+  const setNotification = useStoreNotif((state) => state.setNotification);
 
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [isPasswordConfirmVisible, setPasswordConfirmVisible] = useState(false);
@@ -39,7 +39,7 @@ export function Signup() {
     } else {
       // Redirect user to Dashboard
       navigate("/");
-      setIsDisplayed(true);
+      setNotification(true, 'success', 'Votre compte a été créé avec succès, un email de confirmation a été envoyé.');
     }
   }
 
