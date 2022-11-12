@@ -2,20 +2,20 @@
     "$schema": "https://json.schemastore.org/web-manifest-combined.json",
     "name": "react-my-expenses",
     "short_name": "react-my-expenses",
-    "start_url": "https://react-my-expenses-git-dev-houkas.vercel.app",
+    "start_url": "https://react-my-expenses.vercel.app",
     "display": "standalone",
     "background_color": "#1C221C",
     "description": "Mon application de suivi de dépenses",
     "icons": [{
-      "src": "https://react-my-expenses-git-dev-houkas.vercel.app/icons/android/android-launchericon-48-48.png",
+      "src": "https://react-my-expenses.vercel.app/icons/android/android-launchericon-48-48.png",
       "sizes": "48x48",
       "type": "image/png"
     }, {
-      "src": "https://react-my-expenses-git-dev-houkas.vercel.app/icons/android/android-launchericon-72-72.png",
+      "src": "https://react-my-expenses.vercel.app/icons/android/android-launchericon-72-72.png",
       "sizes": "72x72",
       "type": "image/png"
     }, {
-      "src": "https://react-my-expenses-git-dev-houkas.vercel.app/icons/android/android-launchericon-96-96.png",
+      "src": "https://react-my-expenses.vercel.app/icons/android/android-launchericon-96-96.png",
       "sizes": "96x96",
       "type": "image/png"
     }, {
@@ -23,11 +23,11 @@
       "sizes": "144x144",
       "type": "image/png"
     }, {
-      "src": "https://react-my-expenses-git-dev-houkas.vercel.app/icons/android/android-launchericon-192-192.png",
+      "src": "https://react-my-expenses.vercel.app/icons/android/android-launchericon-192-192.png",
       "sizes": "192x192",
       "type": "image/png"
     }, {
-        "src": "https://react-my-expenses-git-dev-houkas.vercel.app/icons/android/android-launchericon-512-512.png",
+        "src": "https://react-my-expenses.vercel.app/icons/android/android-launchericon-512-512.png",
         "sizes": "512x512",
         "type": "image/png"
     }]

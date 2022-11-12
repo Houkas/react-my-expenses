@@ -80,6 +80,32 @@ body,
   overflow-x: hidden;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 2em;
+}
+::-webkit-scrollbar-button {
+  height: 60px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: $light-grey;
+  border-radius: 0;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $green; 
+  border-radius: 0;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #6fce5e; 
+}
+
 /* Grid */
 
 
