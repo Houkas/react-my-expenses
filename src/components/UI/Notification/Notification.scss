@@ -1,4 +1,5 @@
 .notification{
     opacity: 0;
     transition: opacity 1s ease, transform 1s ease;
+    z-index: 999;
 }

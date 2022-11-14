@@ -6,8 +6,12 @@ import {
 } from "../../../services/expenseService";
 import { ExpenseCategory } from "../../../types/ExpenseCategory";
 import { useAuth } from "../../Auth/Auth";
+import useStoreNotif from "../../store/store-notification";
 
 function NewCategory() {
+
+  const setNotification = useStoreNotif((state) => state.setNotification);
+  
   const { user } = useAuth();
   const [categories, setCategories] = useState<ExpenseCategory[] | undefined>(
     undefined
@@ -35,7 +39,7 @@ function NewCategory() {
   }, [categories]);
 
   const categoriesHandler = (event: any, btnClicked: boolean) => {
-    if (event?.keyCode === 13 || btnClicked === true) {
+    if ((event !== null && event?.keyCode === 13) || (event !== null && btnClicked === true) || (input !== "" && btnClicked === true)) {
       let newc: ExpenseCategory;
       if(event?.keyCode === 13){
         newc = new ExpenseCategory(event.target.value.toString(), color);
@@ -49,6 +53,9 @@ function NewCategory() {
       addExpenseCategory(newc, user?.id);
       setcategoriesUpdated(true);
       setInput("");
+    }
+    if((event === null && event?.keyCode === 13) || (input === "" && btnClicked === true)){
+      setNotification(true, 'error', 'Vous ne pouvez pas enregsitrer de catégorie sans nom.');
     }
   };
 
