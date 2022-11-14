@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   addExpense,
   fetchCategories,
@@ -10,15 +10,17 @@ import { ExpenseCategory } from "../../../types/ExpenseCategory";
 import { useAuth } from "../../Auth/Auth";
 import useStoreNotif from "../../store/store-notification";
 import useStore from "../../store/store-zustand";
-import Loader from "../../UI/Loader/Loader";
 import "./ExpenseForm.css";
+import {motion} from 'framer-motion';
 
 function ExpenseForm(props: any) {
+
   const setNotification = useStoreNotif((state) => state.setNotification);
-  const addExpenseStore = useStore((state) => state.addExpense);
+
   const selectedExpenseToEdit = useStore(
     (state) => state.selectedExpenseToEdit
   );
+
   const expenses = useStore((state) => state.expenses);
   const setExpenses = useStore((state) => state.setExpenses);
   const setIsExpensesListChanged = useStore(
@@ -163,10 +165,75 @@ function ExpenseForm(props: any) {
       setIsExpensesListChanged(true);
     }
   }
+  const media = window.matchMedia('(max-width: 480px)');
+  let dropIn;
+  if (media.matches === true) {
+    dropIn = {
+      hidden:{
+        y: '30vh',
+        opacity: 0
+      },
+      visible: {
+        y: '0.5vh',
+        opacity: 1,
+        transition: {
+          duration: .1,
+          type:'spring',
+          damping:30,
+          stiffness:400
+        }
+      },
+      exit : {
+        y: '50vh',
+        opacity: 0,
+        transition: {
+          duration: .1,
+          type:'spring',
+          damping:30,
+          stiffness:200
+        }
+      }
+    }
+  } else {
+    dropIn = {
+      hidden:{
+        y: '30vh',
+        opacity: 0
+      },
+      visible: {
+        y: '0.5vh',
+        opacity: 1,
+        transition: {
+          duration: .1,
+          type:'spring',
+          damping:30,
+          stiffness:400
+        }
+      },
+      exit : {
+        y: '50vh',
+        opacity: 0,
+        transition: {
+          duration: .1,
+          type:'spring',
+          damping:30,
+          stiffness:200
+        }
+      }
+    }
+  }
 
   return (
-    <form onSubmit={submitHandler} className="flex justify-center">
-      <div className="bg-color-lgrey absolute bottom-[60px] p-2 z-[2]">
+    <motion.form 
+      onSubmit={submitHandler}
+      className="flex justify-center fixed bottom-[60px] form-expense"
+      variants={dropIn}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+     >
+      <div className="bg-color-lgrey  p-2 z-[2] border border-[#1C221C]">
+      <h2 className="p-2 color-dgreen">Ajouter une dépense : </h2>
         <div className="flex flex-row flex-start">
           <div className="p-2 w-full">
             <label className="color-dgreen">Titre</label>
@@ -174,7 +241,7 @@ function ExpenseForm(props: any) {
               type="text"
               value={enteredTitle}
               onChange={titleChangeHandler}
-              className="p-2 border-dgreen border bg-transparent color-dgreen font-sm"
+              className="p-2 border-dgreen border bg-transparent color-dgreen font-sm h-[38px]"
             />
           </div>
 
@@ -185,7 +252,7 @@ function ExpenseForm(props: any) {
                 name="types"
                 id="type-select"
                 value={enteredCategoryId}
-                className="p-2 border-dgreen border bg-transparent color-dgreen font-sm w-full"
+                className="p-2 border-dgreen border bg-transparent color-dgreen font-sm w-full h-[38px]"
                 onChange={categoryChangeHandler}
               >
                 {categories?.map((category) => (
@@ -208,7 +275,7 @@ function ExpenseForm(props: any) {
               name="types"
               id="type-select"
               value={enteredType}
-              className="p-2 border-dgreen border bg-transparent color-dgreen font-sm"
+              className="p-2 border-dgreen border bg-transparent color-dgreen font-sm h-[38px]"
               onChange={typeChangeHandler}
             >
               <option value="courante">Courante</option>
@@ -224,7 +291,7 @@ function ExpenseForm(props: any) {
               min="0.01"
               step="0.01"
               onChange={amountChangeHandler}
-              className="p-2 border-dgreen border bg-transparent color-dgreen font-sm"
+              className="p-2 border-dgreen border bg-transparent color-dgreen font-sm h-[38px]"
             />
             €
           </div>
@@ -236,7 +303,7 @@ function ExpenseForm(props: any) {
               value={enteredDate}
               min="2019-01-01"
               onChange={dateChangeHandler}
-              className="p-2 border-dgreen border bg-transparent color-dgreen font-sm"
+              className="p-2 border-dgreen border bg-transparent color-dgreen font-sm h-[38px]"
             />
           </div>
         </div>
@@ -263,7 +330,7 @@ function ExpenseForm(props: any) {
           )}
         </div>
       </div>
-    </form>
+    </motion.form>
   );
 }
 

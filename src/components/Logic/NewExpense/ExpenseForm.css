@@ -28,3 +28,22 @@
 .font-sm{
   font-size: 12px;
 }
+
+@media (max-width: 480px) {
+  .form-expense{
+    left: 0%;
+  }
+}
+
+
+@media (min-width: 481px) and (max-width: 860px)  {
+  .form-expense{
+    left: 21%;
+  }
+}
+
+@media (min-width: 861px) {
+  .form-expense{
+    left: 35%;
+  }
+}
