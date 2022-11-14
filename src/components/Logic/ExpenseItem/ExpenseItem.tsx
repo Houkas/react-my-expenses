@@ -57,7 +57,7 @@ function ExpenseItem(props: any) {
     deleteExpense(props.id);
     removeExpensesStore(props.id);
     setIsExpensesListChanged(true);
-    setNotification(true, 'error', "Dépense : '" + expenseTitle + "' supprimée avec succès.");
+    setNotification(true, 'error', "🗑️ Dépense : '" + expenseTitle + "' supprimée avec succès.");
   }
 
   return (

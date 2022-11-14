@@ -157,7 +157,7 @@ function ExpenseForm(props: any) {
         setNotification(
           true,
           "success",
-          "Dépense : '" + expenseData.title + "' ajoutée avec succès."
+          "✅ Dépense : '" + expenseData.title + "' ajoutée avec succès."
         );
       });
       setIsExpensesListChanged(true);
