@@ -10,6 +10,7 @@ import { ExpenseCategory } from "../../../types/ExpenseCategory";
 import { useAuth } from "../../Auth/Auth";
 import useStoreNotif from "../../store/store-notification";
 import useStore from "../../store/store-zustand";
+import Loader from "../../UI/Loader/Loader";
 import "./ExpenseForm.css";
 
 function ExpenseForm(props: any) {
@@ -58,10 +59,20 @@ function ExpenseForm(props: any) {
     });
 
     if (selectedExpenseToEdit !== undefined) {
-      const selectedExpenseToEditYear = new Date(selectedExpenseToEdit.date).getFullYear();
-      const selectedExpenseToEditMonth = String(new Date(selectedExpenseToEdit.date).getMonth() + 1).padStart(2, "0");
-      const selectedExpenseToEditDay = String(new Date(selectedExpenseToEdit.date).getDate());
-      const editExpenseDate = [selectedExpenseToEditYear, selectedExpenseToEditMonth, selectedExpenseToEditDay].join("-")
+      const selectedExpenseToEditYear = new Date(
+        selectedExpenseToEdit.date
+      ).getFullYear();
+      const selectedExpenseToEditMonth = String(
+        new Date(selectedExpenseToEdit.date).getMonth() + 1
+      ).padStart(2, "0");
+      const selectedExpenseToEditDay = String(
+        new Date(selectedExpenseToEdit.date).getDate()
+      );
+      const editExpenseDate = [
+        selectedExpenseToEditYear,
+        selectedExpenseToEditMonth,
+        selectedExpenseToEditDay,
+      ].join("-");
 
       setEnteredTitle(selectedExpenseToEdit.title);
       setEnteredCategoryId(selectedExpenseToEdit.category_id);
@@ -143,7 +154,11 @@ function ExpenseForm(props: any) {
         fetchExpenses(user?.id).then((expenses) => {
           setExpenses(expenses);
         });
-        setNotification(true, 'success', "Dépense : '" + expenseData.title + "' ajoutée avec succès.");
+        setNotification(
+          true,
+          "success",
+          "Dépense : '" + expenseData.title + "' ajoutée avec succès."
+        );
       });
       setIsExpensesListChanged(true);
     }
@@ -152,8 +167,8 @@ function ExpenseForm(props: any) {
   return (
     <form onSubmit={submitHandler} className="flex justify-center">
       <div className="bg-color-lgrey absolute bottom-[60px] p-2 z-[2]">
-        <div className="flex flex-row">
-          <div className="p-2">
+        <div className="flex flex-row flex-start">
+          <div className="p-2 w-full">
             <label className="color-dgreen">Titre</label>
             <input
               type="text"
@@ -162,14 +177,15 @@ function ExpenseForm(props: any) {
               className="p-2 border-dgreen border bg-transparent color-dgreen font-sm"
             />
           </div>
-          {categories != undefined && categories.length > 0 && (
-            <div className="p-2">
-              <label className="color-dgreen">Catégorie</label>
+
+          <div className="p-2 w-full">
+            <label className="color-dgreen">Catégorie</label>
+            {categories != undefined && categories.length > 0 && (
               <select
                 name="types"
                 id="type-select"
                 value={enteredCategoryId}
-                className="p-2 border-dgreen border bg-transparent color-dgreen font-sm"
+                className="p-2 border-dgreen border bg-transparent color-dgreen font-sm w-full"
                 onChange={categoryChangeHandler}
               >
                 {categories?.map((category) => (
@@ -182,8 +198,8 @@ function ExpenseForm(props: any) {
                   </option>
                 ))}
               </select>
-            </div>
-          )}
+            )}
+          </div>
         </div>
         <div className="flex flex-row">
           <div className="p-2">

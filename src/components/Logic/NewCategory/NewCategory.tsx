@@ -88,7 +88,7 @@ function NewCategory() {
             id="body"
             name="body"
             value={color}
-            className="w-[60px] h-[45px]"
+            className="w-[60px] h-[45px] rounded-none"
             onChange={colorHandler}
           />
           <input
@@ -98,7 +98,7 @@ function NewCategory() {
             onChange={inputHandler}
             value={input}
             id="category"
-            className="color-dgreen"
+            className="color-dgreen rounded-none"
           ></input>
           <button
             onClick={() => categoriesHandler(null, true)}
