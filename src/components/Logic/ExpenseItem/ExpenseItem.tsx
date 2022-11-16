@@ -63,14 +63,15 @@ function ExpenseItem(props: any) {
   return (
     <li className="mb-5">
       <div
-        className="flex flex-row justify-between mb-2 items-center border-l-[5px] pl-2"
-        style={{ borderColor: expenseColorCategory }}
+        className="flex flex-row justify-between mb-2 items-center"
+        
       >
         <div className="w-[30%]">
           <ExpenseDate date={props.date} />
         </div>
 
-        <div className="overflow-hidden text-ellipsis m-1 w-[35%]">
+        <div className="overflow-hidden text-ellipsis m-1 w-[35%] flex flex-row items-center">
+          <div style={{ backgroundColor: expenseColorCategory }} className="w-[8px] h-[8px] p-2"></div>
           <h2 className="color-dgreen font-medium" style={{ fontSize: "12px" }}>
             {expenseTitle}
           </h2>
