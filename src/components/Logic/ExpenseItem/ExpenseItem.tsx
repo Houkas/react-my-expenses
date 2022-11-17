@@ -1,19 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  deleteExpense,
-} from "../../../services/expenseService";
+import { deleteExpense } from "../../../services/expenseService";
 import { Expense } from "../../../types/Expense";
 import useStore from "../../store/store-zustand";
 import ExpenseDate from "../ExpenseDate/ExpenseDate";
 import "./ExpenseItem.css";
-import useStoreNotif from '../../store/store-notification';
+import useStoreNotif from "../../store/store-notification";
 
 function ExpenseItem(props: any) {
-
   const removeExpensesStore = useStore((state) => state.removeExpense);
   const setSelectedExpenseToEdit = useStore((state) => state.setExpenseToEdit);
   const expenseCategories = useStore((state) => state.expenseCategories);
-  const setIsExpensesListChanged = useStore((state) => state.setIsExpensesListChanged);
+  const setIsExpensesListChanged = useStore(
+    (state) => state.setIsExpensesListChanged
+  );
   const setNotification = useStoreNotif((state) => state.setNotification);
 
   const [expenseCatId, setExpenseCatId] = useState(0);
@@ -41,7 +40,6 @@ function ExpenseItem(props: any) {
   }, [expenseCategories, props]);
 
   function editHandler() {
-    
     let expense = new Expense(
       props.id,
       expenseTitle,
@@ -50,28 +48,32 @@ function ExpenseItem(props: any) {
       expenseAmount,
       props.type
     );
-    setSelectedExpenseToEdit(expense)
+    setSelectedExpenseToEdit(expense);
   }
 
   function deleteHandler() {
     deleteExpense(props.id);
     removeExpensesStore(props.id);
     setIsExpensesListChanged(true);
-    setNotification(true, 'error', "🗑️ Dépense : '" + expenseTitle + "' supprimée avec succès.");
+    setNotification(
+      true,
+      "error",
+      "🗑️ Dépense : '" + expenseTitle + "' supprimée avec succès."
+    );
   }
 
   return (
     <li className="mb-5">
-      <div
-        className="flex flex-row justify-between mb-2 items-center"
-        
-      >
+
+      <a className="flex flex-row justify-between mb-2 items-center cursor-pointer border border-[#B4C0B2] p-2">
         <div className="w-[30%]">
           <ExpenseDate date={props.date} />
         </div>
-
+        <div
+          style={{ backgroundColor: expenseColorCategory }}
+          className="w-[8px] h-[8px]"
+        ></div>
         <div className="overflow-hidden text-ellipsis m-1 w-[35%] flex flex-row items-center">
-          <div style={{ backgroundColor: expenseColorCategory }} className="w-[8px] h-[8px] p-2"></div>
           <h2 className="color-dgreen font-medium" style={{ fontSize: "12px" }}>
             {expenseTitle}
           </h2>
@@ -82,21 +84,7 @@ function ExpenseItem(props: any) {
         >
           {expenseAmount} €
         </span>
-
-        <div className="flex flex-row w-[15%] justify-center items-center">
-          <button className="bg-color-dgreen m-1 min-w-[25px] h-[25px] flex flex-row justify-center items-center" onClick={editHandler}>
-            <img src="./edit_green.svg" />
-          </button>
-
-          <button
-            className="bg-color-dgreen m-1 min-w-[25px] h-[25px] flex flex-row justify-center items-center"
-            onClick={deleteHandler}
-          >
-            <img src="./delete_red.svg" />
-          </button>
-        </div>
-      </div>
-      <hr className="w-full separator" />
+      </a>
     </li>
   );
 }
