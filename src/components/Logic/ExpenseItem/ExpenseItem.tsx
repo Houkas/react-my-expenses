@@ -8,7 +8,9 @@ import useStoreNotif from "../../store/store-notification";
 
 function ExpenseItem(props: any) {
   const removeExpensesStore = useStore((state) => state.removeExpense);
-  const setSelectedExpenseToEdit = useStore((state) => state.setExpenseToEdit);
+  const selectedExpense = useStore((state) => state.selectedExpense);
+  const setSelectedExpense = useStore((state) => state.setSelectedExpense);
+
   const expenseCategories = useStore((state) => state.expenseCategories);
   const setIsExpensesListChanged = useStore(
     (state) => state.setIsExpensesListChanged
@@ -18,7 +20,7 @@ function ExpenseItem(props: any) {
   const [expenseCatId, setExpenseCatId] = useState(0);
   const [expenseTitle, setTitle] = useState("");
   const [expenseColorCategory, setColorCategory] = useState("");
-  const [isInit, setIsInit] = useState(true);
+
   const expenseAmount: number = props.amount;
 
   useEffect(() => {
@@ -39,33 +41,43 @@ function ExpenseItem(props: any) {
     }
   }, [expenseCategories, props]);
 
-  function editHandler() {
-    let expense = new Expense(
-      props.id,
-      expenseTitle,
-      expenseCatId,
-      props.date,
-      expenseAmount,
-      props.type
-    );
-    setSelectedExpenseToEdit(expense);
-  }
+  
 
-  function deleteHandler() {
-    deleteExpense(props.id);
-    removeExpensesStore(props.id);
-    setIsExpensesListChanged(true);
-    setNotification(
-      true,
-      "error",
-      "🗑️ Dépense : '" + expenseTitle + "' supprimée avec succès."
-    );
+  function selectExpenseHandler(): void {
+    if((selectedExpense !== undefined && selectedExpense.id === props.id) || (selectedExpense !== undefined && selectedExpense?.id !== props.id)){
+      setSelectedExpense(undefined);
+    }
+    else if(selectedExpense !== undefined){
+      setSelectedExpense(undefined);
+      setSelectedExpense(new Expense(
+        props.id,
+        expenseTitle,
+        expenseCatId,
+        props.date,
+        expenseAmount,
+        props.type
+      ));
+    } else {
+      let expense = new Expense(
+        props.id,
+        expenseTitle,
+        expenseCatId,
+        props.date,
+        expenseAmount,
+        props.type
+      );
+      setSelectedExpense(expense);
+    }
+
   }
 
   return (
     <li className="mb-5">
 
-      <a className="flex flex-row justify-between mb-2 items-center cursor-pointer border border-[#B4C0B2] p-2">
+      <a className="flex flex-row justify-between mb-2 items-center cursor-pointer border p-2 shadow"
+        onClick={() => selectExpenseHandler()}
+        style={{borderColor: props.id === selectedExpense?.id ? '#87FF73' : '#B4C0B2'}}
+      >
         <div className="w-[30%]">
           <ExpenseDate date={props.date} />
         </div>
@@ -90,3 +102,5 @@ function ExpenseItem(props: any) {
 }
 
 export default ExpenseItem;
+
+

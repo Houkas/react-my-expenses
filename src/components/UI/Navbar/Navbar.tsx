@@ -7,6 +7,8 @@ import useStore from "../../store/store-zustand";
 import { AnimatePresence } from "framer-motion";
 
 function Navbar() {
+  const setExpensesStore = useStore((state) => state.setExpenses);
+  const setSelectedExpense = useStore((state) => state.setSelectedExpense);
   const setExpenseToEdit = useStore((state) => state.setExpenseToEdit);
   const location = useLocation();
   const selectedExpenseToEdit = useStore(
@@ -17,6 +19,8 @@ function Navbar() {
     setIsFormVisible(!isFormVisible);
     if (isFormVisible === true) {
       setExpenseToEdit(undefined);
+    } else {
+      setSelectedExpense(undefined);
     }
   }
 

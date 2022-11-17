@@ -1,7 +1,8 @@
 import { supabase } from "./supabaseClient"
 import type { Expense } from '../types/Expense'
-import { useState } from "react";
+
 import { ExpenseCategory } from "../types/ExpenseCategory";
+
 
 
 export async function addExpense(expense: Expense, userId: string | undefined) {
@@ -51,8 +52,12 @@ export async function fetchExpenses(userId: string | undefined): Promise<Expense
 
 export async function deleteExpense(id:number){
   try {
-
-    await supabase.from("expenses").delete().eq("id", id);
+    if(id !== null) {
+      await supabase.from("expenses").delete().eq("id", id);
+    } else{
+      console.log("Id de la dépense non définie");
+    }
+    
 
   } catch (error) {
     console.log("error", error);

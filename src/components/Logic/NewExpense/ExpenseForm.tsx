@@ -130,7 +130,7 @@ function ExpenseForm(props: any) {
       updateExpense(expenseData, user?.id);
       const updatedExpenses = updateExpenseById(expenseData);
       setExpenses(updatedExpenses);
-      debugger;
+
       setEnteredTitle("");
       setEnteredAmount(0);
       setEnteredDate(daySelected);

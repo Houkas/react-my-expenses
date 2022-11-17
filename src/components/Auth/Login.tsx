@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./Auth";
 import Notification from "../UI/Notification/Notification";
 import useStoreNotif from "../store/store-notification";
+import { AnimatePresence } from "framer-motion";
 
 export function Login() {
-
   const notification = useStoreNotif((state) => state.notification);
 
   const emailRef = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -36,7 +36,14 @@ export function Login() {
 
   return (
     <>
-      {notification.isDisplayed === true && <Notification type={notification.isDisplayed} message={notification.message}></Notification>}
+      {notification.isDisplayed === true && (
+        <AnimatePresence mode="wait">
+          <Notification
+            type={notification.isDisplayed}
+            message={notification.message}
+          ></Notification>
+        </AnimatePresence>
+      )}
       <div className="flex justify-center">
         <div className=" flex flex-col justify-center h-screen mx-5 max-w-[576px]">
           <img src={"./logo.svg"} className="mx-auto my-4"></img>

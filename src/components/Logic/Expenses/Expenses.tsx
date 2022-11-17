@@ -10,10 +10,10 @@ import useStore from "../../store/store-zustand";
 import { fetchCategories } from "../../../services/expenseService";
 import { useAuth } from "../../Auth/Auth";
 import Notification from "../../UI/Notification/Notification";
-import useStoreNotif from '../../store/store-notification';
+import useStoreNotif from "../../store/store-notification";
+import { AnimatePresence } from "framer-motion";
 
 function Expenses() {
-
   const { user } = useAuth();
   const notification = useStoreNotif((state) => state.notification);
 
@@ -228,14 +228,22 @@ function Expenses() {
 
   return (
     <div>
-      {notification.isDisplayed === true && <Notification type={notification.type} message={notification.message}></Notification>}
+      {notification.isDisplayed === true && (
+        <AnimatePresence mode="wait">
+          <Notification
+            type={notification.type}
+            message={notification.message}
+          ></Notification>
+        </AnimatePresence>
+      )}
       <ExpensesFilter
         selected={selectedYear}
         onYearSelected={yearFilterHandler}
         onMonthSelected={monthFilterHandler}
         onDaySelected={dayFilterHandler}
       />
-      <Card className="expenses">
+
+      <Card>
         {expensesFilteredStore && <ExpensesList />}
         {expensesFilteredStore === undefined && (
           <p className="text-[#1C221C] text-center">

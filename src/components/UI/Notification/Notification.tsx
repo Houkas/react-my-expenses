@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import useStoreNotif from "../../store/store-notification";
 import "./Notification.scss";
@@ -17,7 +18,7 @@ export default function Notification(props: any) {
       setInterval(killNotification, 10000);
     } else {
       if (isMounted === false) {
-        setNotification(false, '', '');
+        setNotification(false, "", "");
       }
     }
   }, [isMounted]);
@@ -36,12 +37,45 @@ export default function Notification(props: any) {
     setIsMounted(false);
   }
 
+  const dropIn = {
+    hidden: {
+      y: "-30vh",
+      opacity: 0,
+    },
+    visible: {
+      y: "0px",
+      opacity: 1,
+      transition: {
+        duration: 0.1,
+        type: "spring",
+        damping: 30,
+        stiffness: 400,
+      },
+    },
+    exit: {
+      y: "30vh",
+      opacity: 0,
+      transition: {
+        duration: 0.1,
+        type: "spring",
+        damping: 30,
+        stiffness: 200,
+      },
+    },
+  };
+
   return (
-    <div>
-      { isMounted === true && (
+    <motion.div
+      variants={dropIn}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className="absolute top-[70px]"
+    >
+      {isMounted === true && (
         <div
           className={
-            "notification mx-auto absolute top-[70px] right-[20px] max-w-full text-sm pointer-events-auto bg-clip-padding mb-3"
+            "notification mx-auto  right-[20px] max-w-full text-sm pointer-events-auto bg-clip-padding mb-3"
           }
           style={{
             opacity: isMounted === true ? 1 : 0,
@@ -72,6 +106,6 @@ export default function Notification(props: any) {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

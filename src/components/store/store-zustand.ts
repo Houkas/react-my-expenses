@@ -3,7 +3,7 @@ import { Expense } from "../../types/Expense";
 import { ExpenseCategory } from "../../types/ExpenseCategory";
 
 interface ExpenseState {
-
+    selectedExpense: Expense | undefined,
     selectedExpenseToEdit: Expense | undefined,
     expenses: Expense[] | undefined,
     expensesSum: number,
@@ -22,6 +22,7 @@ interface ExpenseState {
     setMonthFilter: (month: string) => void,
     setDayFilter: (day: string) => void,
 
+    setSelectedExpense: (expense: Expense | undefined) => void,
     setExpenseToEdit: (expense: Expense | undefined) => void,
     setExpenses: (expenses: Expense[] | undefined) => void,
     setExpensesFiltered: (expenses: Expense[] | undefined) => void,
@@ -32,6 +33,7 @@ interface ExpenseState {
 }
 
 const useStore = create<ExpenseState>((set) => ({
+    selectedExpense: undefined,
     selectedExpenseToEdit: undefined,
     expenses: undefined,
     expensesSum: 0,
@@ -58,6 +60,9 @@ const useStore = create<ExpenseState>((set) => ({
         () => ({ dayFilter: day })
     ),
 
+    setSelectedExpense: (expense: Expense | undefined) => set(
+        () => ({ selectedExpense: expense })
+    ),
     setExpenseToEdit: (expense: Expense | undefined) => set(
         () => ({ selectedExpenseToEdit: expense })
     ),
