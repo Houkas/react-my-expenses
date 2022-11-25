@@ -80,7 +80,6 @@ function ExpenseItem(props: any) {
 
   return (
     <li className="mb-5">
-
       <a className="flex flex-row justify-between mb-2 items-center cursor-pointer border p-2 shadow"
         onClick={() => selectExpenseHandler()}
         style={{borderColor: props.id === selectedExpense?.id ? '#87FF73' : '#B4C0B2'}}

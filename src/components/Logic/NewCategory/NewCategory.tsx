@@ -78,9 +78,10 @@ function NewCategory() {
 
   return (
     <>
-      <label htmlFor="category" className="text-white">
-        Ajouter une ou plusieurs catégories de dépense
-      </label>
+      <h2 className="underline underline-offset-8">
+        Ajouter une catégorie :
+      </h2>
+
       <div className="flex flex-col py-2 border-dgreen border bg-transparent color-dgreen font-sm">
         <div className="flex flex-row">
           <input
