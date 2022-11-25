@@ -39,6 +39,10 @@ $dark-green: #1C221C;
 h1, h2, h3, h4, h5, label, span, button{
   font-family: 'Space Mono', monospace;
 }
+input{
+  color: $dark-green;
+  padding: 5px;
+}
 
 *{
   font-family: 'Roboto', sans-serif;

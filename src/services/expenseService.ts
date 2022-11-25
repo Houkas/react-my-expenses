@@ -80,13 +80,13 @@ export async function addExpenseCategory(expenseCategory: ExpenseCategory, userI
 }
 
 export async function fetchCategories(userId: string | undefined): Promise<ExpenseCategory[] | undefined> {
-  const { data: expenses, error } = await supabase
+  const { data: categories, error } = await supabase
     .from("categories")
     .select("*");
   if (error){
     console.log("error", error);
   } else{
-    return expenses;
+    return categories;
   }
 }
 
@@ -98,4 +98,42 @@ export async function deleteCategory(id:number){
   } catch (error) {
     console.log("error", error);
   }
+}
+
+
+export async function fetchSalary(userId: string | undefined): Promise<number | undefined> {
+  const { data: salary, error } = await supabase
+    .from("profiles")
+    .select("salary")
+    .eq('id', userId);
+  if (error){
+    console.log("error", error);
+  } else{
+    return salary[0].salary;
+  }
+}
+
+export async function addSalary(salary: number, userId: string | undefined) {
+
+  const { data } = await supabase
+    .from('profiles')
+    .insert([
+      {
+        id: userId,
+        salary: salary
+      },
+    ]).single();
+
+  return data;
+}
+
+export async function updateSalary(salary: number,  userId: string | undefined) {
+  const { data } = await supabase
+    .from('profiles')
+    .update({
+      salary: salary
+    })
+    .eq('id', userId)
+
+  return data;
 }

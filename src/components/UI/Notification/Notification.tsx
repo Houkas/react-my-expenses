@@ -70,12 +70,12 @@ export default function Notification(props: any) {
       initial="hidden"
       animate="visible"
       exit="exit"
-      className="absolute top-[70px]"
+      className="absolute top-[70px] notification"
     >
       {isMounted === true && (
         <div
           className={
-            "notification mx-auto  right-[20px] max-w-full text-sm pointer-events-auto bg-clip-padding mb-3"
+            " mx-auto  right-[20px] max-w-full text-sm pointer-events-auto bg-clip-padding mb-3"
           }
           style={{
             opacity: isMounted === true ? 1 : 0,
