@@ -101,6 +101,19 @@ export async function deleteCategory(id:number){
 }
 
 
+export async function fetchProfile(userId: string | undefined): Promise<any> {
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq('id', userId);
+  if (error){
+    console.log("error", error);
+  } else{
+    return profile[0];
+  }
+}
+
+
 export async function fetchSalary(userId: string | undefined): Promise<number | undefined> {
   const { data: salary, error } = await supabase
     .from("profiles")
@@ -114,7 +127,6 @@ export async function fetchSalary(userId: string | undefined): Promise<number | 
 }
 
 export async function addSalary(salary: number, userId: string | undefined) {
-
   const { data } = await supabase
     .from('profiles')
     .insert([
@@ -127,7 +139,8 @@ export async function addSalary(salary: number, userId: string | undefined) {
   return data;
 }
 
-export async function updateSalary(salary: number,  userId: string | undefined) {
+export async function updateSalary(salary: number | null,  userId: string | undefined) {
+  debugger;
   const { data } = await supabase
     .from('profiles')
     .update({

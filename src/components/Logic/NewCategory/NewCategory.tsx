@@ -50,7 +50,13 @@ function NewCategory() {
       setCategories((prevCategories): ExpenseCategory[] | undefined => {
         return [...(prevCategories ?? []), newc];
       });
-      addExpenseCategory(newc, user?.id);
+      addExpenseCategory(newc, user?.id).then(() =>{
+        setNotification(
+          true,
+          "success",
+          "✅ Catégories enregistrées avec succés."
+        );
+      });
       setcategoriesUpdated(true);
       setInput("");
     }
@@ -68,7 +74,13 @@ function NewCategory() {
   };
 
   const deleteHandler = (id: number) => {
-    deleteCategory(id);
+    deleteCategory(id).then(() =>{
+      setNotification(
+        true,
+        "success",
+        "✅ Catégories enregistrées avec succés."
+      );
+    });
     setCategories(
       categories?.filter((categorie) => {
         return categorie.id !== id;

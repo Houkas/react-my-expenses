@@ -7,11 +7,12 @@ import ExpensesSum from "../ExpensesSum/ExpensesSum";
 import { Expense } from "../../../types/Expense";
 
 import useStore from "../../store/store-zustand";
-import { fetchCategories } from "../../../services/expenseService";
+import { fetchCategories, fetchSalary } from "../../../services/expenseService";
 import { useAuth } from "../../Auth/Auth";
 import Notification from "../../UI/Notification/Notification";
 import useStoreNotif from "../../store/store-notification";
 import { AnimatePresence } from "framer-motion";
+import useStoreSalary from "../../store/store-salary";
 
 function Expenses() {
   const { user } = useAuth();
@@ -43,6 +44,8 @@ function Expenses() {
   );
   const [isInit, setIsInit] = useState(true);
   const [typeFilter, setTypeFilter] = useState("");
+
+  const setSalary = useStoreSalary((state) => state.setSalary);
 
   function yearFilterHandler(yearSelected: string) {
     setYear(yearSelected);
@@ -143,6 +146,10 @@ function Expenses() {
 
   useEffect(() => {
     // init
+    //init
+    fetchSalary(user?.id).then((salary) => {
+      setSalary(salary!);
+    });
     if (
       (expensesCategories?.length === 0 && isInit === true) ||
       (expensesCategories === undefined && isInit === true) ||
