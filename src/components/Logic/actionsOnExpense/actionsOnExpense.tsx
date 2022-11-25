@@ -23,7 +23,6 @@ export default function ActionsOnExpense() {
 
   let [isFormVisible, setIsFormVisible] = useState(false);
 
-
   function hideExpenseForm() {
     setIsFormVisible(false);
   }
@@ -44,6 +43,10 @@ export default function ActionsOnExpense() {
       );
       setSelectedExpense(undefined);
     }
+  }
+
+  function hideActionsHandler(): void {
+    setSelectedExpense(undefined);
   }
 
   const dropIn = {
@@ -106,9 +109,16 @@ export default function ActionsOnExpense() {
           >
             <img src="./delete_red.svg" />
           </button>
-          <span className="color-dgreen text-[14px] font-medium">Supprimer</span>
+          <span className="color-dgreen text-[14px] font-medium">
+            Supprimer
+          </span>
+        </div>
+        <div className="absolute right-0 top-0 cursor-pointer" onClick={() => hideActionsHandler()}>
+          <img src={"./close_dark.svg"} alt="" width="35px" />
         </div>
       </div>
     </motion.div>
   );
 }
+
+

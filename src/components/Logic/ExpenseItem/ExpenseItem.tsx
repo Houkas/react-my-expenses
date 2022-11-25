@@ -45,7 +45,14 @@ function ExpenseItem(props: any) {
 
   function selectExpenseHandler(): void {
     if((selectedExpense !== undefined && selectedExpense.id === props.id) || (selectedExpense !== undefined && selectedExpense?.id !== props.id)){
-      setSelectedExpense(undefined);
+      setSelectedExpense(new Expense(
+        props.id,
+        expenseTitle,
+        expenseCatId,
+        props.date,
+        expenseAmount,
+        props.type
+      ));
     }
     else if(selectedExpense !== undefined){
       setSelectedExpense(undefined);
