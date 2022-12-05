@@ -146,7 +146,6 @@ function Expenses() {
 
   useEffect(() => {
     // init
-    //init
     fetchSalary(user?.id).then((salary) => {
       setSalary(salary!);
     });
