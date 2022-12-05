@@ -18,7 +18,7 @@ export default function NewSalary() {
 
   useEffect(() => {
     //init
-    fetchSalary(user?.id).then((salary) => {
+    fetchSalary(user?.id).then((salary:number | undefined) => {
       setEnteredSalary(salary!);
     });
   }, [salary]);
@@ -28,7 +28,6 @@ export default function NewSalary() {
   }
 
   function deleteHandler() {
-    debugger;
     updateSalary(null, user?.id).then(() => {
       setEnteredSalary(0);
       setSalary(null);
@@ -72,7 +71,8 @@ export default function NewSalary() {
               min={0}
               value={enteredSalary !== null ? enteredSalary : 0}
               onChange={salaryHandler}
-              className={"mt-2 h-[45px] rounded-none"}
+              className={"mt-2 h-[45px] rounded-none text-[#1C221C]"}
+              placeholder="Ajouter son salaire"
             />
             <button
               onClick={() => submitHandler}

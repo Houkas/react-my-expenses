@@ -111,7 +111,7 @@ function NewCategory() {
             onChange={inputHandler}
             value={input}
             id="category"
-            className="color-dgreen rounded-none"
+            className="color-dgreen rounded-none text-[#1C221C]"
           ></input>
           <button
             onClick={() => categoriesHandler(null, true)}
