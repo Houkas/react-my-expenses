@@ -42,6 +42,9 @@ function Stats() {
   const [expensesPerCategory, setExpensesPerCategory] = useState<
     numberExpensesPerCategory[]
   >([]);
+  const [nbrExpensesPerCategory, setNbrExpensesPerCategory] = useState<
+    numberExpensesPerCategory[]
+  >([]);
 
   const expensesStore = useStore((state) => state.expenses);
   const setExpensesStore = useStore((state) => state.setExpenses);
@@ -61,22 +64,40 @@ function Stats() {
         setExpenseCategories(categories);
         const expenses = await fetchExpenses(user?.id);
         setExpensesStore(expenses);
-        let obj: numberExpensesPerCategory[] = [];
+        let amountExpensesPerCategory: numberExpensesPerCategory[] = [];
+        let nbrExpensesPerCategory: numberExpensesPerCategory[] = [];
+        let initialValue = 0;
 
         categories?.forEach((category) => {
-          obj.push({
+          amountExpensesPerCategory.push({
             key: category.name,
             value: {
               id: category.id,
               color: category.color,
               numberExpenses: expenses?.filter(
                 (expense) => expense.category_id === category.id
-              ).length,
+              ).reduce(
+                (accumulator, expense) => accumulator + expense.amount,
+                initialValue
+              )
+            },
+          });
+
+          nbrExpensesPerCategory.push({
+            key: category.name,
+            value: {
+              id: category.id,
+              color: category.color,
+              numberExpenses: expenses?.filter(
+                (expense) => expense.category_id === category.id
+              ).length
             },
           });
         });
 
-        setExpensesPerCategory(obj);
+        setExpensesPerCategory(amountExpensesPerCategory);
+
+        setNbrExpensesPerCategory(nbrExpensesPerCategory);
       })();
     }
   }, [expensesStore, expenseCategories]);
@@ -93,17 +114,31 @@ function Stats() {
     ],
   };
 
+  const dataNbrExpenses = {
+    labels: nbrExpensesPerCategory?.map((cat) => cat.key),
+    datasets: [
+      {
+        label: "Dépenses par catégories",
+        data: nbrExpensesPerCategory?.map((cat) => cat.value.numberExpenses),
+        backgroundColor: nbrExpensesPerCategory?.map((cat) => cat.value.color),
+        hoverOffset: 4,
+      },
+    ],
+  };
   return (
     <>
       <Header onOpeningMenu={handleOnOpeningMenu} />
-      <div className="pt-20 px-5 flex flex-col justify-center items-center">
-        <h1>Statistiques</h1>
+      <div className="pt-20 px-5 flex flex-col justify-center items-center mb-20">
+        <h1 className="border border-b p-2">Statistiques</h1>
         {!expensesStore && !expenseCategories && (
           <p>Vous ne pouvez pas accéder aux statistiques. Remplissez des dépenses et des catégories pour y avoir accès.</p>
         )}
         {expensesStore && expenseCategories && expensesPerCategory && (
           <div className="w-full mx-5">
             <h2 className="text-center">Nombre de dépenses par catégorie (sur toutes vos dépenses)</h2>
+            <Pie data={dataNbrExpenses} />
+            <hr className="my-5"></hr>
+            <h2 className="text-center">Montant des dépenses par catégorie (sur toutes vos dépenses)</h2>
             <Pie data={data} />
           </div>
         )}
