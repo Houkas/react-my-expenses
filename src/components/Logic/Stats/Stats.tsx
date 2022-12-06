@@ -102,7 +102,7 @@ function Stats() {
           <p>Vous ne pouvez pas accéder aux statistiques. Remplissez des dépenses et des catégories pour y avoir accès.</p>
         )}
         {expensesStore && expenseCategories && expensesPerCategory && (
-          <div className="w-1/3">
+          <div className="w-full mx-5">
             <h2 className="text-center">Nombre de dépenses par catégorie (sur toutes vos dépenses)</h2>
             <Pie data={data} />
           </div>
