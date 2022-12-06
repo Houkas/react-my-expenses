@@ -10,48 +10,55 @@ import { fetchCategories, fetchExpenses, fetchSalary } from "../../../services/e
 import { useAuth } from "../../Auth/Auth";
 import useStoreSalary from "../../store/store-salary";
 import { Expense } from "../../../types/Expense";
+import { ExpenseCategory } from "../../../types/ExpenseCategory";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function Stats() {
   const { user } = useAuth();
+
   const [isMenuVisivle, setIsMenuVisible] = useState(false);
+
+  // To do : 
+  // - compter le nombre de dépense par catégorie
+  // - mettre dans un tableau toutes les couleurs des catégories
+  // 
+  const [numberCategories, setNumberCategories] = useState(0);
+
   const expensesStore = useStore((state) => state.expenses);
   const setExpensesStore = useStore((state) => state.setExpenses);
-  
+  const expenseCategories = useStore((state) => state.expenseCategories);
+  const setExpenseCategories = useStore((state) => state.setExpenseCategories);
+
   function handleOnOpeningMenu(isOpened: any) {
     if (isOpened) {
       setIsMenuVisible((isOpened) => !isOpened);
     }
   }
 
-  const setSalary = useStoreSalary((state) => state.setSalary);
-
   useEffect(() => {
     console.log(expensesStore);
+    console.log(expenseCategories);
     if(expensesStore === undefined || expensesStore === null){
       (async () => {
+
+        const categories = await fetchCategories(user?.id);
+        setExpenseCategories(categories)
         const expenses = await fetchExpenses(user?.id);
         setExpensesStore(expenses);
-        console.log(expenses)
+
       })();
     }
-  }, []);
+  }, [expensesStore, expenseCategories]);
 
   const data = {
-    labels: [
-      'Red',
-      'Blue',
-      'Yellow'
-    ],
+    labels: expenseCategories?.map(cat => cat.name),
     datasets: [{
-      label: 'My First Dataset',
-      data: [300, 50, 100],
-      backgroundColor: [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)'
+      label: 'Dépenses par catégories',
+      data: [
+        300, 40, 100, 10, 5, 25, 3
       ],
+      backgroundColor: expenseCategories?.map(cat => cat.color),
       hoverOffset: 4
     }]
   };
